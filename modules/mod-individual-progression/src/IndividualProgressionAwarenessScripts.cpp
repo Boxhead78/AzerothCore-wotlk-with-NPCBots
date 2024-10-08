@@ -341,6 +341,37 @@ public:
         return new npc_ipp_naxx40AI(creature);
     }
 };
+
+class npc_ipp_individual_progression_setter : public CreatureScript
+{
+public:
+    npc_ipp_individual_progression_setter() : CreatureScript("npc_ipp_individual_progression_setter") { }
+
+    struct npc_ipp_individual_progression_setterAI: ScriptedAI
+    {
+        explicit npc_ipp_individual_progression_setterAI(Creature* creature) : ScriptedAI(creature) { };
+
+        bool CanBeSeen(Player const* player) override
+        {
+            if (player->IsGameMaster() || !sIndividualProgression->enabled)
+            {
+                return true;
+            }
+            Player* target = ObjectAccessor::FindConnectedPlayer(player->GetGUID());
+            uint8 highestProgression = sIndividualProgression->GetAccountProgression(target->GetSession()->GetAccountId());
+            if (sIndividualProgression->hasPassedProgression(target, PROGRESSION_CUSTOM_TIER_1) || (sIndividualProgression->progressionLimit && highestProgression >= sIndividualProgression->progressionLimit))
+                return true;
+            else
+                return false;
+        }
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_ipp_individual_progression_setterAI(creature);
+    }
+};
+
 // Add all scripts in one
 void AddSC_mod_individual_progression_awareness()
 {
@@ -357,4 +388,5 @@ void AddSC_mod_individual_progression_awareness()
     new npc_ipp_wotlk_icc();
     new gobject_ipp_tbc();
 //    new gobject_ipp_wotlk(); // Not used yet
+    new npc_ipp_individual_progression_setter();
 }
