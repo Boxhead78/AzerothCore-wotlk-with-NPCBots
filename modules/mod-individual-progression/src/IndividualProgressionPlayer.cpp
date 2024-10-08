@@ -18,7 +18,7 @@ public:
 
     void OnLogin(Player* player) override
     {
-        if (player->getClass() == CLASS_DEATH_KNIGHT && sIndividualProgression->deathKnightStartingProgression && !sIndividualProgression->hasPassedProgression(player, static_cast<ProgressionState>(sIndividualProgression->deathKnightStartingProgression)))
+        if (sIndividualProgression->deathKnightStartingProgression && player->getClass() == CLASS_DEATH_KNIGHT && (int32)player->GetLevel() == sConfigMgr->GetOption<int32>("StartHeroicPlayerLevel", 55) && !sIndividualProgression->hasPassedProgression(player, static_cast<ProgressionState>(sIndividualProgression->deathKnightStartingProgression)))
         {
             sIndividualProgression->UpdateProgressionState(player, static_cast<ProgressionState>(sIndividualProgression->deathKnightStartingProgression));
         }

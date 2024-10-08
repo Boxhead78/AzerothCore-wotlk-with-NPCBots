@@ -304,7 +304,7 @@ IndividualProgression.TbcRacesStartingProgression = 6
 #
 #
 
-IndividualProgression.DeathKnightUnlockProgression = 0
+IndividualProgression.DeathKnightUnlockProgression = 11
 #
 #    IndividualProgression.DeathKnightStartingProgression
 #        Description: The progression level at which Death Knight characters will begin.
