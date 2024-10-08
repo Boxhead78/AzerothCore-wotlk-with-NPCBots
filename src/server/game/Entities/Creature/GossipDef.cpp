@@ -556,8 +556,6 @@ void PlayerMenu::SendQuestQueryResponse(Quest const* quest) const
     data << uint32(quest->GetNextQuestInChain());           // client will request this quest from NPC, if not 0
     data << uint32(0);                                      // used for calculating rewarded experience || BOXHEAD: Disabled due to incorrect values in quest log
 
-    // Boxhead TODO: FIX QUEST LOG XP HERE
-
     if (quest->HasFlag(QUEST_FLAGS_HIDDEN_REWARDS))
         data << uint32(0);                                  // Hide money rewarded
     else
