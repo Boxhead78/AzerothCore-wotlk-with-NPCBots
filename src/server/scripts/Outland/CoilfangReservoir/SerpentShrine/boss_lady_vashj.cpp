@@ -200,19 +200,19 @@ struct boss_lady_vashj : public BossAI
         }).Schedule(0s, [this](TaskContext context)
         {
             DoCastSelf(SPELL_SUMMON_ENCHANTED_ELEMENTAL, true);
-            context.Repeat(2500ms);
+            context.Repeat(5000ms);
         }).Schedule(45s, [this](TaskContext context)
         {
             DoCastSelf(SPELL_SUMMON_COILFANG_ELITE, true);
-            context.Repeat(45s);
+            context.Repeat(75s);
         }).Schedule(60s, [this](TaskContext context)
         {
             DoCastSelf(SPELL_SUMMON_COILFANG_STRIDER, true);
-            context.Repeat(60s);
-        }).Schedule(50s, [this](TaskContext context)
+            context.Repeat(90s);
+        }).Schedule(30s, [this](TaskContext context)
         {
             DoCastSelf(SPELL_SUMMON_TAINTED_ELEMENTAL, true);
-            context.Repeat(50s);
+            context.Repeat(45s);
         }).Schedule(1s, [this](TaskContext context)
         {
             if (!me->HasAura(SPELL_MAGIC_BARRIER))
@@ -300,7 +300,7 @@ struct npc_tainted_elemental : public ScriptedAI
         {
             DoCastVictim(SPELL_POISON_BOLT);
             context.Repeat(2350ms, 2650ms);
-        }).Schedule(15s, [this](TaskContext)
+        }).Schedule(30s, [this](TaskContext)
         {
             me->DespawnOrUnsummon();
         });
