@@ -272,11 +272,22 @@ IndividualProgression.RepeatableVanillaQuestsXP = 1
 #                     Please refer to IndividualProgression.h/ProgressionState enum for progression stage values.
 #
 #        Default:   0 - TBC Races always available
+#                   6 - Classic must be complete to create TBC Races
 #                   1-16 - Required progression level to create TBC Race characters
 #
 #
 
-IndividualProgression.TbcRacesUnlockProgression = 0
+IndividualProgression.TbcRacesUnlockProgression = 6
+#
+#    IndividualProgression.TbcRacesStartingProgression
+#        Description: The progression level at which TBC races characters will begin.
+#
+#        Default:   6 - TBC Races start at the beginning of TBC
+#                   0-16 - Progression level
+#
+#
+
+IndividualProgression.TbcRacesStartingProgression = 6
 #
 #    IndividualProgression.DeathKnightUnlockProgression
 #        Description: The progression level at which Death Knight characters can be created.
