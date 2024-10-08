@@ -160,7 +160,7 @@ public:
                 amount *= 2.25;
 
             // > WotLK xp boost
-            if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_WOTLK_TIER_5) && player->GetLevel() < 80)
+            if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_CUSTOM_TIER_1) && player->GetLevel() < 80)
                 amount *= 3.0;
         }
 

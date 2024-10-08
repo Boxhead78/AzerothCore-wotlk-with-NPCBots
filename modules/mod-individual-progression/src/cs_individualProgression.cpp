@@ -28,7 +28,7 @@ public:
 
     static bool HandleSetIndividualProgressionCommand(ChatHandler* handler, Optional<PlayerIdentifier> player, uint32 progressionLevel)
     {
-        if (progressionLevel > PROGRESSION_WOTLK_TIER_5)
+        if (progressionLevel > PROGRESSION_CUSTOM_TIER_1)
         {
             handler->SendSysMessage("Invalid progression level.");
             return false;

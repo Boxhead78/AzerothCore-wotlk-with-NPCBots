@@ -215,7 +215,7 @@ void KillRewarder::_RewardXP(Player* player, float rate)
             xp *= 2.25;
 
         // > WotLK xp boost
-        if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_WOTLK_TIER_5) && player->GetLevel() < 80)
+        if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_CUSTOM_TIER_1) && player->GetLevel() < 80)
             xp *= 3.0;
 
         // Don't give XP outside of dungeons if in LFG Group now

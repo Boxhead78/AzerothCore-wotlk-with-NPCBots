@@ -124,7 +124,8 @@ enum ProgressionState : uint8
     PROGRESSION_WOTLK_TIER_2    = 13, // Ulduar
     PROGRESSION_WOTLK_TIER_3    = 14, // TotC
     PROGRESSION_WOTLK_TIER_4    = 15, // ICC
-    PROGRESSION_WOTLK_TIER_5    = 16  // Ruby Sanctum
+    PROGRESSION_WOTLK_TIER_5    = 16, // Ruby Sanctum
+    PROGRESSION_CUSTOM_TIER_1   = 17  // Custom Content 1
 };
 
 enum RandomDungeonIds : uint16

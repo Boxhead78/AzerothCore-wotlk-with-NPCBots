@@ -867,7 +867,7 @@ uint32 PlayerMenu::CalculateCustomQuestXpExtras(Player* player, uint32 questXp) 
         questXp *= 2.25;
 
     // > WotLK xp boost
-    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_WOTLK_TIER_5) && player->GetLevel() < 80)
+    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_CUSTOM_TIER_1) && player->GetLevel() < 80)
         questXp *= 3.0;
 
     return questXp;
