@@ -894,7 +894,8 @@ void AuctionHouseBot::Initialize()
                            "SELECT item FROM milling_loot_template UNION "
                            "SELECT item FROM pickpocketing_loot_template UNION "
                            "SELECT item FROM prospecting_loot_template UNION "
-                           "SELECT item FROM skinning_loot_template";
+                           "SELECT item FROM skinning_loot_template UNION " 
+                           "SELECT entry FROM item_template";
 
         results = WorldDatabase.Query(lootQuery);
         if (results)
