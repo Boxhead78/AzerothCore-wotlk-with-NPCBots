@@ -12325,43 +12325,39 @@ uint32 Unit::SpellDamageBonusDone(Unit* victim, SpellInfo const* spellProto, uin
             {
                 //Classic Early Level Nerf
                 if (mapEntry->Expansion() == CONTENT_1_60 && GetLevel() <= 40)
-                {
                     DoneTotalMod *= (0.2 + (0.02 * GetLevel()));
-                }
 
                 //TBC Buff
                 if (mapEntry->Expansion() == CONTENT_61_70)
-                {
                     DoneTotalMod *= 1.33;
-                }
 
                 //TBC Dungeon Heroic Nerf
                 if (mapEntry->Expansion() == CONTENT_61_70 && creatureMap->IsDungeon() && creatureMap->IsHeroic())
-                {
                     DoneTotalMod *= 0.8;
-                }
+
                 //TBC Dungeon Nerf
                 else if (mapEntry->Expansion() == CONTENT_61_70 && creatureMap->IsDungeon())
-                {
                     DoneTotalMod *= 0.75;
-                }
+
+                //TBC World Boss Nerf
+                if (mapEntry->Expansion() == CONTENT_61_70 && ToCreature()->isWorldBoss())
+                    DoneTotalMod *= 0.5;
 
                 //WotLK Buff
                 if (mapEntry->Expansion() == CONTENT_71_80)
-                {
                     DoneTotalMod *= 1.66;
-                }
 
                 //WotLK Dungeon Heroic Buff
                 if (mapEntry->Expansion() == CONTENT_71_80 && creatureMap->IsDungeon() && creatureMap->IsHeroic())
-                {
                     DoneTotalMod *= 0.8;
-                }
+
                 //WotLK Dungeon Nerf
                 else if (mapEntry->Expansion() == CONTENT_71_80 && creatureMap->IsDungeon())
-                {
                     DoneTotalMod *= 0.75;
-                }
+
+                //WotLK World Boss Nerf
+                if (mapEntry->Expansion() == CONTENT_71_80 && ToCreature()->isWorldBoss())
+                    DoneTotalMod *= 0.5;
             }
         }
     }

@@ -1237,6 +1237,13 @@ void Creature::CalculateMinMaxDamage(WeaponAttackType attType, bool normalized, 
                     maxDamage *= 0.75;
                 }
 
+                //TBC World Boss Nerf
+                if (mapEntry->Expansion() == CONTENT_61_70 && ToCreature()->isWorldBoss())
+                {
+                    minDamage *= 0.5;
+                    maxDamage *= 0.5;
+                }
+
                 //WotLK Buff
                 if (mapEntry->Expansion() == CONTENT_71_80)
                 {
@@ -1255,6 +1262,13 @@ void Creature::CalculateMinMaxDamage(WeaponAttackType attType, bool normalized, 
                 {
                     minDamage *= 0.75;
                     maxDamage *= 0.75;
+                }
+
+                //WotLK World Boss Nerf
+                if (mapEntry->Expansion() == CONTENT_71_80 && ToCreature()->isWorldBoss())
+                {
+                    minDamage *= 0.5;
+                    maxDamage *= 0.5;
                 }
             }
         }

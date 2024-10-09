@@ -1645,10 +1645,8 @@ void Creature::SelectLevel(bool changelevel)
                         healthmod *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                     //Content Buff
-                    if (GetLevel() >= 40)
-                    {
+                    if (GetLevel() > 40)
                         healthmod *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                    }
                 }
 
                 //Dungeons
@@ -1659,10 +1657,9 @@ void Creature::SelectLevel(bool changelevel)
                         healthmod *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                     //Content Buff
-                    if (GetLevel() >= 40)
-                    {
+                    if (GetLevel() > 40)
                         healthmod *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                    }
+
                     healthmod *= 2;
                 }
 
@@ -1674,10 +1671,9 @@ void Creature::SelectLevel(bool changelevel)
                         healthmod *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                     //Content Buff
-                    if (GetLevel() >= 40)
-                    {
+                    if (GetLevel() > 40)
                         healthmod *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                    }
+
                     healthmod *= 1.5;
                 }
             }
@@ -1996,10 +1992,8 @@ bool Creature::LoadCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool ad
                             curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                         //Content Buff
-                        if (GetLevel() >= 40)
-                        {
+                        if (GetLevel() > 40)
                             curhealth *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                        }
                     }
 
                     //Dungeons
@@ -2010,10 +2004,9 @@ bool Creature::LoadCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool ad
                             curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                         //Content Buff
-                        if (GetLevel() >= 40)
-                        {
+                        if (GetLevel() > 40)
                             curhealth *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                        }
+
                         curhealth *= 2;
                     }
 
@@ -2025,10 +2018,9 @@ bool Creature::LoadCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool ad
                             curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                         //Content Buff
-                        if (GetLevel() >= 40)
-                        {
+                        if (GetLevel() > 40)
                             curhealth *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                        }
+
                         curhealth *= 1.5;
                     }
                 }
@@ -4349,10 +4341,8 @@ bool Creature::LoadBotCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool
                             curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                         //Content Buff
-                        if (GetLevel() >= 40)
-                        {
+                        if (GetLevel() > 40)
                             curhealth *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                        }
                     }
 
                     //Dungeons
@@ -4363,10 +4353,9 @@ bool Creature::LoadBotCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool
                             curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                         //Content Buff
-                        if (GetLevel() >= 40)
-                        {
+                        if (GetLevel() > 40)
                             curhealth *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                        }
+
                         curhealth *= 2;
                     }
 
@@ -4378,10 +4367,9 @@ bool Creature::LoadBotCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool
                             curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
 
                         //Content Buff
-                        if (GetLevel() >= 40)
-                        {
+                        if (GetLevel() > 40)
                             curhealth *= (0.6 + (0.010125 * GetLevel())); //Buff hp from level 40 to 60 gradually
-                        }
+
                         curhealth *= 1.5;
                     }
                 }
