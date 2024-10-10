@@ -86,6 +86,7 @@ struct boss_halazzi : public BossAI
 
     void Reset() override
     {
+        instance->SetData(DATA_HALAZZIEVENT, NOT_STARTED);
         BossAI::Reset();
         _transformCount = 0;
         _healthCheckPercentage = 0;
@@ -106,6 +107,7 @@ struct boss_halazzi : public BossAI
 
     void JustEngagedWith(Unit* who) override
     {
+        instance->SetData(DATA_HALAZZIEVENT, IN_PROGRESS);
         BossAI::JustEngagedWith(who);
         Talk(SAY_AGGRO);
         ScheduleUniqueTimedEvent(10min, [&]
@@ -270,6 +272,7 @@ struct boss_halazzi : public BossAI
 
     void JustDied(Unit* killer) override
     {
+        instance->SetData(DATA_HALAZZIEVENT, DONE);
         BossAI::JustDied(killer);
         Talk(SAY_DEATH);
     }
