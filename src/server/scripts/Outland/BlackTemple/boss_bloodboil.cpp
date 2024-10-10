@@ -102,6 +102,7 @@ struct boss_gurtogg_bloodboil : public BossAI
         ScheduleTimedEvent(1min, [&] {
             if (Unit* target = SelectTarget(SelectTargetMethod::Random, 1, 40.0f, true))
             {
+                Talk(SAY_SPECIAL);
                 me->RemoveAurasByType(SPELL_AURA_MOD_TAUNT);
                 DoCastSelf(SPELL_FEL_RAGE_SELF, true);
                 DoCast(target, SPELL_FEL_RAGE_TARGET, true);
@@ -112,11 +113,15 @@ struct boss_gurtogg_bloodboil : public BossAI
 
                 DoCast(target, SPELL_FEL_GEYSER_SUMMON, true);
                 DoCastSelf(SPELL_FEL_GEYSER_STUN, true);
-                DoCastSelf(SPELL_INSIGNIFICANCE, true);
+                //DoCastSelf(SPELL_INSIGNIFICANCE, true); Causes crash with NPCBot
 
                 me->m_Events.AddEventAtOffset([&] {
                     DoCastVictim(SPELL_CHARGE);
                 }, 2s);
+
+                me->m_Events.AddEventAtOffset([this] {
+                    DoResetThreatList();
+                }, 30s);
 
                 scheduler.DelayGroup(GROUP_DELAY, 30s);
             }
