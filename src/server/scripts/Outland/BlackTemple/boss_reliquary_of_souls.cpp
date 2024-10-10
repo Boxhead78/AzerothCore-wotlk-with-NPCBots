@@ -538,15 +538,9 @@ public:
             }, 10s);
 
             ScheduleTimedEvent(1s, [&] {
-                if (Unit* victim = me->GetVictim())
-                {
-                    ObjectGuid victimGUID = victim->GetGUID();
-                    if (targetGUID && targetGUID != victimGUID)
-                        DoCastSelf(SPELL_SEETHE);
-                    // victim can be lost
-                    targetGUID = victimGUID;
-                }
-            }, 1s);
+                //DoCastSelf(SPELL_SEETHE); Crash with NPC Bot
+                DoCastSelf(SPELL_FRENZY);
+            }, 15s);
         }
 
         void UpdateAI(uint32 diff) override
