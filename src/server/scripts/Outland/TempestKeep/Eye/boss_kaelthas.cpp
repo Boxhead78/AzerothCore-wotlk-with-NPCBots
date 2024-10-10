@@ -722,18 +722,16 @@ struct boss_kaelthas : public BossAI
             Talk(SAY_SUMMON_PHOENIX);
             DoCastSelf(SPELL_PHOENIX);
         }, 35450ms, 41550ms);
-        /* Boxhead: Not fun with bots
         ScheduleTimedEvent(20s, 23s, [&]
         {
             if (roll_chance_i(50))
                 Talk(SAY_MINDCONTROL);
-            me->CastCustomSpell(SPELL_MIND_CONTROL, SPELLVALUE_MAX_TARGETS, 3, me, false);
+            //me->CastCustomSpell(SPELL_MIND_CONTROL, SPELLVALUE_MAX_TARGETS, 3, me, false); //Boxhead: Not fun with bots
             scheduler.Schedule(3s, [this](TaskContext)
             {
                 DoCastSelf(SPELL_ARCANE_DISRUPTION);
             });
         }, 23s, 26s);
-        */
         ScheduleTimedEvent(60s, [&]
         {
             Talk(SAY_PYROBLAST);
