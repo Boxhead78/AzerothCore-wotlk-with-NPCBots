@@ -174,7 +174,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (who->IsPlayer() && me->GetExactDist2d(who) < 45.0f && me->getStandState() == UNIT_STAND_STATE_SUBMERGED)
+            if ((who->IsPlayer() || who->IsNPCBot()) && me->GetExactDist2d(who) < 45.0f && me->getStandState() == UNIT_STAND_STATE_SUBMERGED)
             {
                 me->SetStandState(UNIT_STAND_STATE_STAND);
                 if (Unit* arm = ObjectAccessor::GetCreature(*me, _left))
@@ -707,7 +707,7 @@ public:
         if (target == _victim && _me->GetThreatMgr().GetThreatListSize() > 1)
             return true;
 
-        if (!target->IsPlayer())
+        if (!target->IsPlayer() && !target->IsNPCBot())
             return true;
 
         return false;

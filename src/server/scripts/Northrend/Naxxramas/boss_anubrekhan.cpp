@@ -146,12 +146,12 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (!victim->IsPlayer())
+            if (!victim->IsPlayer() && !victim->IsNPCBot())
                 return;
 
             Talk(SAY_SLAY);
             victim->CastSpell(victim, SPELL_SUMMON_CORPSE_SCRABS_5, true, nullptr, nullptr, me->GetGUID());
-            if (pInstance)
+            if (pInstance && victim->IsPlayer())
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }

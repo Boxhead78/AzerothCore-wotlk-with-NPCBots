@@ -151,7 +151,7 @@ struct boss_volazj : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
         {
             switch (urand(0, 2))
             {

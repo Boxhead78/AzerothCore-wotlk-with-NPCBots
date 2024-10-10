@@ -2067,7 +2067,7 @@ class spell_igb_rocket_pack_useable_aura : public AuraScript
 
     bool CheckAreaTarget(Unit* target)
     {
-        return target->IsPlayer() && GetOwner()->GetInstanceScript()->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != DONE;
+        return (target->IsPlayer() || target->IsNPCBot()) && GetOwner()->GetInstanceScript()->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != DONE;
     }
 
     void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -2516,7 +2516,7 @@ public:
 
     bool operator()(WorldObject* unit)
     {
-        return !unit->IsPlayer() || unit->GetPositionZ() > 478.0f || !unit->GetTransport() || unit->GetTransport()->GetEntry() != _entry
+        return (!unit->IsPlayer() && !unit->IsNPCBot()) || unit->GetPositionZ() > 478.0f || !unit->GetTransport() || unit->GetTransport()->GetEntry() != _entry
         || unit->GetMapHeight(unit->GetPhaseMask(), unit->GetPositionX(), unit->GetPositionY(), unit->GetPositionZ()) < 465.0f;
     }
 
@@ -2620,7 +2620,7 @@ class spell_igb_on_gunship_deck_aura : public AuraScript
 
     bool CheckAreaTarget(Unit* unit)
     {
-        return unit->IsPlayer();
+        return unit->IsPlayer() || unit->IsNPCBot();
     }
 
     void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)

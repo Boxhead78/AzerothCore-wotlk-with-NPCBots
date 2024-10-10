@@ -333,7 +333,7 @@ struct boss_jedoga_shadowseeker : public BossAI
 
     void KilledUnit(Unit* who) override
     {
-        if (!who->IsPlayer())
+        if (!who->IsPlayer() || !who->IsNPCBot())
         {
             return;
         }

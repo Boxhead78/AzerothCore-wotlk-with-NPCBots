@@ -209,7 +209,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
                 Talk(SAY_SLAY);
         }
 

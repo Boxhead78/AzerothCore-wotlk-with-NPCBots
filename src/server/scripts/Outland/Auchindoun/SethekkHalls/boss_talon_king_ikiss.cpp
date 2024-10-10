@@ -83,7 +83,7 @@ struct boss_talon_king_ikiss : public BossAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!_spoken && who->IsPlayer())
+        if (!_spoken && who->IsPlayer() || who->IsNPCBot())
         {
             Talk(SAY_INTRO);
             _spoken = true;
@@ -133,7 +133,7 @@ struct boss_talon_king_ikiss : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer() && urand(0, 1))
+        if ((victim->IsPlayer() || victim->IsNPCBot()) && urand(0, 1))
         {
             Talk(SAY_SLAY);
         }

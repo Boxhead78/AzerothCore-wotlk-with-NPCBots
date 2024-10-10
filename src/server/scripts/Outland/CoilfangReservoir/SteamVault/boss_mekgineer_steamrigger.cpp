@@ -56,7 +56,7 @@ struct boss_mekgineer_steamrigger : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
         {
             Talk(SAY_SLAY);
         }

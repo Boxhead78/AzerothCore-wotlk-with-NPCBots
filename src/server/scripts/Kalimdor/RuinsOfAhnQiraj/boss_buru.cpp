@@ -106,7 +106,7 @@ struct boss_buru : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
             ChaseNewVictim();
     }
 
@@ -249,7 +249,7 @@ class spell_egg_explosion : public SpellScript
         if (Unit* target = GetHitUnit())
         {
             int32 damage = 0;
-            if (target->IsPlayer())
+            if (target->IsPlayer() || target->IsNPCBot())
                 damage = -16 * GetCaster()->GetDistance(target) + 500;
             else if (target->GetEntry() == NPC_BURU && target->HasAura(SPELL_THORNS))
                 damage = target->GetMaxHealth() * 7.f / 100;

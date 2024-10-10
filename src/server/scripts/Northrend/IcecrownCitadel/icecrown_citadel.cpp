@@ -968,7 +968,7 @@ public:
         bool CanAIAttack(Unit const* target) const override
         {
             // do not see targets inside Frostwing Halls when we are not there
-            return !target->IsPlayer() && (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && target->GetEntry() != NPC_SINDRAGOSA;
+            return (!target->IsPlayer() && !target->IsNPCBot()) && (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && target->GetEntry() != NPC_SINDRAGOSA;
         }
 
     private:
@@ -1212,7 +1212,7 @@ public:
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
             Talk(SAY_CAPTAIN_KILL);
     }
 
@@ -1238,7 +1238,7 @@ public:
     bool CanAIAttack(Unit const* target) const override
     {
         // do not see targets inside Frostwing Halls when we are not there
-        return (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && (target->IsPlayer() || target->IsInCombat());
+        return (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && (target->IsPlayer() || target->IsNPCBot() || target->IsInCombat());
     }
 
     void EnterEvadeMode(EvadeReason why) override

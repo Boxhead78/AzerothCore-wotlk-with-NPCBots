@@ -117,7 +117,7 @@ struct boss_twinemperorsAI : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim && victim->IsPlayer())
+        if (victim && (victim->IsPlayer() || victim->IsNPCBot()))
             Talk(SAY_KILL);
     }
 

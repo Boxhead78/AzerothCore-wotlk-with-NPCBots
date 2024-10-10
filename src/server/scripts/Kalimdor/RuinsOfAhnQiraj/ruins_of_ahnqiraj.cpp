@@ -100,7 +100,7 @@ struct npc_obsidian_destroyer : public ScriptedAI
             std::list<Unit*> targets;
             SelectTargetList(targets, 6, SelectTargetMethod::Random, 1, [&](Unit* target)
             {
-                return target && target->IsPlayer() && target->GetPower(POWER_MANA) > 0;
+                return target && (target->IsPlayer() || target->IsNPCBot()) && target->GetPower(POWER_MANA) > 0;
             });
 
             for (Unit* target : targets)

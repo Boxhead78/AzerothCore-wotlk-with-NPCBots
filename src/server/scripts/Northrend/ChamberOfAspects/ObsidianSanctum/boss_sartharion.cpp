@@ -389,7 +389,7 @@ public:
 
         void KilledUnit(Unit* pVictim) override
         {
-            if (!urand(0, 2) && pVictim->IsPlayer())
+            if (!urand(0, 2) && (pVictim->IsPlayer() || pVictim->IsNPCBot()))
             {
                 Talk(SAY_SARTHARION_SLAY);
             }
@@ -925,7 +925,7 @@ struct boss_sartharion_dragonAI : public BossAI
 
     void KilledUnit(Unit* victim) final
     {
-        if (!victim->IsPlayer() || urand(0, 2))
+        if ((!victim->IsPlayer() && !victim->IsNPCBot()) || urand(0, 2))
         {
             return;
         }

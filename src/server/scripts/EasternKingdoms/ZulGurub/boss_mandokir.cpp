@@ -209,7 +209,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (!victim->IsPlayer())
+            if (!victim->IsPlayer() || victim->IsNPCBot())
                 return;
 
             reviveGUID = victim->GetGUID();
@@ -449,7 +449,7 @@ public:
                             {
                                 if (!me || !target)
                                     return false;
-                                if (!target->IsPlayer() || !me->IsWithinLOSInMap(target))
+                                if ((!target->IsPlayer() && !target->IsNPCBot()) || !me->IsWithinLOSInMap(target))
                                     return false;
                                 return true;
                             }))
@@ -540,7 +540,7 @@ public:
 
         void JustEngagedWith(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
             _scheduler.Schedule(6s, 12s, [this](TaskContext context)

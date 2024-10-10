@@ -609,7 +609,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
             {
                 Talk(SAY_SARA_KILL);
             }
@@ -1010,7 +1010,7 @@ public:
             if (_checkTimer >= 500 && !_isSummoning)
             {
                 Unit* who = me->SelectNearbyTarget(nullptr, 6.0f);
-                if (who && who->IsPlayer() && !me->HasAura(SPELL_SUMMON_GUARDIAN_OF_YS) && !who->HasAura(SPELL_HODIR_FLASH_FREEZE))
+                if (who && (who->IsPlayer() || who->IsNPCBot()) && !me->HasAura(SPELL_SUMMON_GUARDIAN_OF_YS) && !who->HasAura(SPELL_HODIR_FLASH_FREEZE))
                 {
                     _isSummoning = true;
                     Talk(0, who);
@@ -2614,7 +2614,7 @@ class spell_yogg_saron_insane_periodic_trigger : public SpellScript
     {
         std::list<WorldObject*> tmplist;
         for (std::list<WorldObject*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
-            if ((*itr)->IsPlayer() && !(*itr)->ToPlayer()->HasAuraType(SPELL_AURA_AOE_CHARM) && !(*itr)->ToPlayer()->HasAura(SPELL_SANITY))
+            if ((*itr)->IsPlayer() || (*itr)->IsNPCBot() && !(*itr)->ToPlayer()->HasAuraType(SPELL_AURA_AOE_CHARM) && !(*itr)->ToPlayer()->HasAura(SPELL_SANITY))
                 tmplist.push_back(*itr);
 
         targets.clear();
@@ -2659,7 +2659,7 @@ class spell_yogg_saron_sanity_well_aura : public AuraScript
     void HandleEffectPeriodic(AuraEffect const*   /*aurEff*/)
     {
         Unit* target = GetTarget();
-        if (!target || !target->IsPlayer())
+        if (!target || (!target->IsPlayer() && !target->IsNPCBot()))
             return;
 
         if (Aura* aur = target->GetAura(SPELL_SANITY))
@@ -2815,7 +2815,7 @@ class spell_yogg_saron_in_the_maws_of_the_old_god : public SpellScript
 
     SpellCastResult CheckCast()
     {
-        if (!GetCaster()->IsPlayer())
+        if (!GetCaster()->IsPlayer() && !GetCaster()->IsNPCBot())
             return SPELL_FAILED_BAD_TARGETS;
 
         Unit* target = GetCaster()->ToPlayer()->GetSelectedUnit();

@@ -263,11 +263,11 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
             Talk(SAY_SLAY);
-            if (pInstance)
+            if (pInstance && who->IsPlayer())
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }
@@ -442,7 +442,7 @@ public:
                         ThreatContainer::StorageType const& threatList = me->GetThreatMgr().GetThreatList();
                         for (auto itr : threatList)
                         {
-                            if (itr->getTarget()->IsPlayer()
+                            if ((itr->getTarget()->IsPlayer() || itr->getTarget()->IsNPCBot())
                                     && itr->getTarget()->getPowerType() == POWER_MANA
                                     && itr->getTarget()->GetPower(POWER_MANA))
                                     {

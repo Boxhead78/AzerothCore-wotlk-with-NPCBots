@@ -116,7 +116,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
             {
                 Talk(SAY_EADRIC_KILL_PLAYER);
             }
@@ -243,7 +243,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
             {
                 Talk(SAY_PALETRESS_KILL_PLAYER);
             }

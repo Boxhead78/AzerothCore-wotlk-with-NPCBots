@@ -116,7 +116,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer())
+            if (roll_chance_i(25) && (victim->IsPlayer() || victim->IsNPCBot()))
             {
                 Talk(SAY_KILL);
                 DoCastSelf(SPELL_CAPTURE_SOUL);

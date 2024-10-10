@@ -84,7 +84,7 @@ public:
         if (target->GetExactDist(_source) > 175.0f)
             return false;
 
-        if (!target->IsPlayer())
+        if (!target->IsPlayer() && !target->IsNPCBot())
             return false;
 
         if (target->GetPositionX() > -337.0f)
@@ -285,7 +285,7 @@ public:
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
             Talk(SAY_KILL);
     }
 

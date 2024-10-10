@@ -115,7 +115,7 @@ public:
         {
             if (!target || !spell)
                 return;
-            if (spell->Id == SPELL_PURSUIT && target->IsPlayer())
+            if (spell->Id == SPELL_PURSUIT && (target->IsPlayer() || target->IsNPCBot()))
             {
                 Talk(EMOTE_ICK_CHASE, target);
                 AttackStart(target);
@@ -262,7 +262,7 @@ public:
                 if (me->GetReactState() == REACT_PASSIVE)
                     me->SetReactState(REACT_AGGRESSIVE);
 
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
                 if (Creature* k = GetKrick())
                     k->AI()->Talk(SAY_SLAY);
         }

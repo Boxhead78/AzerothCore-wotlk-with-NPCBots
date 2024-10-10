@@ -63,7 +63,7 @@ struct boss_blackheart_the_inciter : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer() && urand(0, 1))
+        if ((victim->IsPlayer() || victim->IsNPCBot()) && urand(0, 1))
         {
             Talk(SAY_SLAY);
         }
@@ -89,7 +89,7 @@ struct boss_blackheart_the_inciter : public BossAI
             for (std::list<HostileReference*>::const_iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
             {
                 Unit* target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid());
-                if (target && target->IsPlayer())
+                if (target && (target->IsPlayer() || target->IsNPCBot()))
                 {
                     if (Creature* inciteTrigger = me->SummonCreature(inciteTriggerID++, *target, TEMPSUMMON_TIMED_DESPAWN, 15 * IN_MILLISECONDS))
                     {

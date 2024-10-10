@@ -225,7 +225,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer() && !urand(0, 2))
+            if ((victim->IsPlayer() || victim->IsNPCBot()) && !urand(0, 2))
             {
                 Talk(SAY_SLAY);
             }

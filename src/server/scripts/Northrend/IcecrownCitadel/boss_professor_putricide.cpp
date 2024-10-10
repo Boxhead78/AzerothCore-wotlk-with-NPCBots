@@ -209,7 +209,7 @@ public:
 
     bool operator()(Unit const* target) const
     {
-        if (!me || !target || !target->IsPlayer())
+        if (!me || !target || (!target->IsPlayer() && !target->IsNPCBot()))
             return false;
 
         if (me->IsWithinCombatRange(target, 7.0f))
@@ -333,7 +333,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer())
+            if (victim->IsPlayer() || victim->IsNPCBot())
                 Talk(SAY_KILL);
         }
 

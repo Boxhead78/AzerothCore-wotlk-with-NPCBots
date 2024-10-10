@@ -264,7 +264,7 @@ struct boss_halazzi : public BossAI
     void KilledUnit(Unit* victim) override
     {
         BossAI::KilledUnit(victim);
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
         {
             Talk(SAY_KILL);
         }

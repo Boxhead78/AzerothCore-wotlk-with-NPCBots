@@ -217,7 +217,7 @@ private:
     {
         Unit* target = SelectTarget(SelectTargetMethod::Random, 0, [this](Unit* target) -> bool
             {
-                if (!target->IsPlayer() || target->getPowerType() != Powers::POWER_MANA)
+                if ((!target->IsPlayer() && !target->IsNPCBot()) || target->getPowerType() != Powers::POWER_MANA)
                     return false;
                 if (me->IsWithinMeleeRange(target) || me->GetVictim() == target)
                     return false;
@@ -299,7 +299,7 @@ class spell_enveloping_webs : public SpellScript
     {
         Unit* caster = GetCaster();
         Unit* hitUnit = GetHitUnit();
-        if (caster && hitUnit && hitUnit->IsPlayer())
+        if (caster && hitUnit && (hitUnit->IsPlayer() || hitUnit->IsNPCBot()))
         {
             caster->GetThreatMgr().ModifyThreatByPercent(hitUnit, -100);
         }

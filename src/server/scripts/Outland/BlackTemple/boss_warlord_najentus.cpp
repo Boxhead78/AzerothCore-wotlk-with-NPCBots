@@ -99,7 +99,7 @@ struct boss_najentus : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer() && _canTalk)
+        if ((victim->IsPlayer() || victim->IsNPCBot()) && _canTalk)
         {
             Talk(SAY_SLAY);
             _canTalk = false;

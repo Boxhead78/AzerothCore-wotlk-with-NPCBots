@@ -205,7 +205,7 @@ public:
                 instance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, 26555, 1, nullptr);
             }
 
-            if (victim->IsPlayer())
+            if (victim->IsPlayer() || victim->IsNPCBot())
                 Talk(SAY_SLAY);
         }
 

@@ -143,14 +143,14 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
             if (!urand(0, 3))
             {
                 Talk(SAY_SLAY);
             }
-            if (pInstance)
+            if (pInstance && who->IsPlayer())
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }

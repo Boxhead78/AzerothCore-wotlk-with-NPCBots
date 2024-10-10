@@ -261,7 +261,7 @@ class spell_gruul_shatter : public SpellScript
         {
             target->RemoveAurasDueToSpell(SPELL_STONED);
 
-            if (target->IsPlayer())
+            if (target->IsPlayer() || target->IsNPCBot())
             {
                 target->CastSpell((Unit*)nullptr, SPELL_SHATTER_EFFECT, true);
             }

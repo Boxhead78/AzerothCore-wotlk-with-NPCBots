@@ -529,7 +529,7 @@ public:
 
     void SpellHitTarget(Unit* target, SpellInfo const* spell) override
     {
-        if (target->IsPlayer() && spell->DurationEntry && spell->DurationEntry->ID == 328 && spell->Effects[EFFECT_1].TargetA.GetTarget() == 1 && (spell->Effects[EFFECT_1].Amplitude == 50 || spell->Effects[EFFECT_1].Amplitude == 215)) // Deep Breath
+        if ((target->IsPlayer() || target->IsNPCBot()) && spell->DurationEntry && spell->DurationEntry->ID == 328 && spell->Effects[EFFECT_1].TargetA.GetTarget() == 1 && (spell->Effects[EFFECT_1].Amplitude == 50 || spell->Effects[EFFECT_1].Amplitude == 215)) // Deep Breath
         {
             instance->SetData(DATA_DEEP_BREATH_FAILED, 1);
         }

@@ -210,11 +210,11 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
             Talk(SAY_SLAY);
-            if (pInstance)
+            if (pInstance && who->IsPlayer())
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }
@@ -490,10 +490,10 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
-            if (pInstance)
+            if (pInstance && who->IsPlayer())
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }
@@ -648,7 +648,7 @@ class spell_thaddius_pos_neg_charge : public SpellScript
         if (!target)
             return;
 
-        if (target->HasAura(GetTriggeringSpell()->Id) || !target->IsPlayer())
+        if (target->HasAura(GetTriggeringSpell()->Id) || (!target->IsPlayer() && !target->IsNPCBot()))
         {
             SetHitDamage(0);
         }

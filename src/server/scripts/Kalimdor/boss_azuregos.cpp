@@ -77,7 +77,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim && victim->IsPlayer())
+            if (victim && (victim->IsPlayer() || victim->IsNPCBot()))
             {
                 Talk(SAY_KILL);
                 victim->CastSpell(victim, SPELL_MARK_OF_FROST, true);

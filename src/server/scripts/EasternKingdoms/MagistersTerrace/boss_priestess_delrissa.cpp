@@ -155,7 +155,7 @@ struct boss_priestess_delrissa : public ScriptedAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (!victim->IsPlayer())
+        if (!victim->IsPlayer() || victim->IsNPCBot())
             return;
 
         if (PlayersKilled < SAY_DEATH)
@@ -292,7 +292,7 @@ struct boss_priestess_lackey_commonAI : public ScriptedAI
         for (ThreatContainer::StorageType::const_iterator itr = tList.begin(); itr != tList.end(); ++itr)
         {
             Unit* pUnit = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid());
-            if (pUnit && pUnit->IsPlayer() && me->GetThreatMgr().GetThreat(pUnit))
+            if (pUnit && (pUnit->IsPlayer() || pUnit->IsNPCBot()) && me->GetThreatMgr().GetThreat(pUnit))
             {
                 float threatMod = GetThreatMod(me->GetDistance2d(pUnit), (float)pUnit->GetArmor(), pUnit->GetHealth(), pUnit->GetMaxHealth(), pUnit);
                 me->GetThreatMgr().ModifyThreatByPercent(pUnit, -100);

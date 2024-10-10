@@ -229,7 +229,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer() && roll_chance_i(50))
+            if ((victim->IsPlayer() || victim->IsNPCBot())&& roll_chance_i(50))
                 Talk(SAY_EVIL_SLAY);
         }
 
@@ -539,7 +539,7 @@ public:
 
         void KilledUnit(Unit* target) override
         {
-            if (target->IsPlayer())
+            if (target->IsPlayer() || target->IsNPCBot())
                 Talk(SAY_SATH_SLAY);
         }
 

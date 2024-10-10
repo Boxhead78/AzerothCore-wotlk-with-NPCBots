@@ -1258,7 +1258,7 @@ public:
                 return;
             if (apply)
             {
-                if (who->IsPlayer())
+                if (who->IsPlayer() || who->IsNPCBot())
                 {
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_ARCANE_OVERLOAD_DMG, true);
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_SURGE_OF_POWER_DMG, true);
@@ -1286,7 +1286,7 @@ public:
                 me->SetCanFly(false);
                 me->GetMotionMaster()->MoveLand(0, me->GetPositionX(), me->GetPositionY(), 267.24f, 10.0f);
 
-                if (who->IsPlayer())
+                if (who->IsPlayer() || who->IsNPCBot())
                 {
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_ARCANE_OVERLOAD_DMG, false);
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_SURGE_OF_POWER_DMG, false);

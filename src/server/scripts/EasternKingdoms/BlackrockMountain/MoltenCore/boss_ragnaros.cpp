@@ -221,7 +221,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (roll_chance_i(25) && victim->IsPlayer())
+            if (roll_chance_i(25) && (victim->IsPlayer() || victim->IsNPCBot()))
             {
                 Talk(SAY_KILL);
             }

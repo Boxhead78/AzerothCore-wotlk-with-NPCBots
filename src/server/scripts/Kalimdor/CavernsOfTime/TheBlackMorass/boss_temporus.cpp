@@ -76,7 +76,7 @@ struct boss_temporus : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
         {
             OwnTalk(SAY_SLAY);
         }

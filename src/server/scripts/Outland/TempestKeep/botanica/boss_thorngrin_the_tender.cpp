@@ -96,7 +96,7 @@ struct boss_thorngrin_the_tender : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
         {
             Talk(SAY_KILL);
         }

@@ -157,7 +157,7 @@ struct boss_warchief_kargath_bladefist : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim && victim->IsPlayer())
+        if (victim && (victim->IsPlayer() || victim->IsNPCBot()))
             Talk(SAY_SLAY);
     }
 

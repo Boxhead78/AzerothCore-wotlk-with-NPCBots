@@ -569,7 +569,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
                 Talk(TEXT_SLAY);
         }
 
@@ -585,7 +585,7 @@ public:
 
         bool CanAIAttack(Unit const* t) const override
         {
-            if (t->IsPlayer())
+            if (t->IsPlayer() || t->IsNPCBot())
                 return !t->HasAura(SPELL_FLASH_FREEZE_TRAPPED_PLAYER);
             else if (t->IsCreature())
                 return !t->HasAura(SPELL_FLASH_FREEZE_TRAPPED_NPC);
@@ -711,9 +711,9 @@ public:
                 {
                     if (Unit* s = me->ToTempSummon()->GetSummonerUnit())
                     {
-                        if ((s->IsPlayer() && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_PLAYER)) || (s->IsCreature() && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_NPC)))
+                        if (((s->IsPlayer() || s->IsNPCBot()) && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_PLAYER)) || (s->IsCreature() && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_NPC)))
                             me->DespawnOrUnsummon(2000);
-                        else if (s->IsPlayer())
+                        else if (s->IsPlayer() || s->IsNPCBot())
                             if (InstanceScript* instanceScript = me->GetInstanceScript())
                                 if (instanceScript->GetData(TYPE_HODIR) == NOT_STARTED)
                                 {
@@ -1220,7 +1220,7 @@ class spell_hodir_biting_cold_main_aura : public AuraScript
     {
         if ((aurEff->GetTickNumber() % 4) == 0)
             if (Unit* target = GetTarget())
-                if (target->IsPlayer()
+                if ((target->IsPlayer() || target->IsNPCBot())
                     && !target->isMoving()
                     && !target->HasAura(SPELL_BITING_COLD_PLAYER_AURA)
                     && !target->HasAura(SPELL_MAGE_TOASTY_FIRE_AURA))
@@ -1366,7 +1366,7 @@ class spell_hodir_flash_freeze_aura : public AuraScript
             if (!target || !caster || !caster->IsCreature())
                 return;
 
-            if (Aura* aur = target->GetAura(target->IsPlayer() ? SPELL_FLASH_FREEZE_TRAPPED_PLAYER : SPELL_FLASH_FREEZE_TRAPPED_NPC))
+            if (Aura* aur = target->GetAura((target->IsPlayer() || target->IsNPCBot()) ? SPELL_FLASH_FREEZE_TRAPPED_PLAYER : SPELL_FLASH_FREEZE_TRAPPED_NPC))
             {
                 if (Unit* caster2 = aur->GetCaster())
                 {
@@ -1378,7 +1378,7 @@ class spell_hodir_flash_freeze_aura : public AuraScript
                 target->CastSpell(target, SPELL_FLASH_FREEZE_INSTAKILL, true);
                 return;
             }
-            if (target->IsPlayer())
+            if (target->IsPlayer() || target->IsNPCBot())
             {
                 caster->ToCreature()->AI()->SetData(1, 1);
                 if (Creature* c = target->SummonCreature(NPC_FLASH_FREEZE_PLR, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 5 * 60 * 1000))

@@ -510,7 +510,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer())
+            if (victim->IsPlayer() || victim->IsNPCBot())
                 Talk(SAY_SLAY);
         }
 
@@ -528,7 +528,7 @@ public:
 
         void DamageTaken(Unit* who, uint32& damage, DamageEffectType, SpellSchoolMask) override
         {
-            if (who && _isHitAllowed && who->GetPositionZ() > 430 && who->IsPlayer())
+            if (who && _isHitAllowed && who->GetPositionZ() > 430 && (who->IsPlayer() || who->IsNPCBot()))
             {
                 _isHitAllowed = false;
                 DisableThorim(false);
@@ -641,7 +641,7 @@ public:
 
         void SpellHitTarget(Unit* target, SpellInfo const* spellInfo) override
         {
-            if (spellInfo->Id == SPELL_LIGHTNING_CHARGE_DAMAGE && target->IsPlayer())
+            if (spellInfo->Id == SPELL_LIGHTNING_CHARGE_DAMAGE && (target->IsPlayer() || target->IsNPCBot()))
                 _hitByLightning = true;
         }
 
@@ -1113,7 +1113,7 @@ public:
 
         void DamageTaken(Unit* who, uint32&, DamageEffectType, SpellSchoolMask) override
         {
-            if (!_playerAttack && who && (who->IsPlayer() || who->GetOwnerGUID().IsPlayer()))
+            if (!_playerAttack && who && ((who->IsPlayer() || who->IsNPCBot()) || who->GetOwnerGUID().IsPlayer()))
             {
                 if (me->GetInstanceScript())
                     if (Creature* thorim = ObjectAccessor::GetCreature(*me, me->GetInstanceScript()->GetGuidData(TYPE_THORIM)))

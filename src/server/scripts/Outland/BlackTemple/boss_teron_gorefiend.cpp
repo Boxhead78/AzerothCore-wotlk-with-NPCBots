@@ -127,7 +127,7 @@ struct boss_teron_gorefiend : public BossAI
 
     void KilledUnit(Unit*  victim) override
     {
-        if (!_recentlySpoken && victim->IsPlayer())
+        if (!_recentlySpoken && (victim->IsPlayer() || victim->IsNPCBot()))
         {
             Talk(SAY_SLAY);
             _recentlySpoken = true;

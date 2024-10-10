@@ -133,7 +133,7 @@ struct boss_nexusprince_shaffar : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
         {
             Talk(SAY_SLAY);
         }

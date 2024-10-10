@@ -544,7 +544,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer())
+            if (victim->IsPlayer() || victim->IsNPCBot())
                 Talk(SAY_KILL);
         }
 

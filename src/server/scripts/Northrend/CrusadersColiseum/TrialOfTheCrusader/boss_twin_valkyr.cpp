@@ -499,7 +499,7 @@ struct boss_twin_valkyrAI : public ScriptedAI
 
     void KilledUnit(Unit* who) override
     {
-        if (who->IsPlayer())
+        if (who->IsPlayer() || who->IsNPCBot())
         {
             Talk(SAY_KILL_PLAYER);
             if (Creature* twin = GetSister())

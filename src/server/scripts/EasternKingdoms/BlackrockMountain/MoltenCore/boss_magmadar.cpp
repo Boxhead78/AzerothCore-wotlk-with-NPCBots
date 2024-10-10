@@ -97,7 +97,7 @@ public:
                     std::list<Unit*> targets;
                     SelectTargetList(targets, 1, SelectTargetMethod::Random, 1, [this](Unit* target)
                     {
-                        return target && target->IsPlayer() && target->GetDistance(me) > MELEE_TARGET_LOOKUP_DIST && target->GetDistance(me) < 100.0f;
+                        return target && (target->IsPlayer() || target->IsNPCBot()) && target->GetDistance(me) > MELEE_TARGET_LOOKUP_DIST && target->GetDistance(me) < 100.0f;
                     });
 
                     if (!targets.empty())

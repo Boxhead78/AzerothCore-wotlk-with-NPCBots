@@ -52,7 +52,7 @@ struct boss_doomwalker : public ScriptedAI
     {
         victim->CastSpell(victim, SPELL_MARK_DEATH, 0);
 
-        if (roll_chance_i(25) && victim->IsPlayer())
+        if (roll_chance_i(25) && (victim->IsPlayer() || victim->IsNPCBot()))
         {
             Talk(SAY_SLAY);
         }

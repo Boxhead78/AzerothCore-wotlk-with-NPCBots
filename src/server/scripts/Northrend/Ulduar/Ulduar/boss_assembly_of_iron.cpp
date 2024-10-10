@@ -310,7 +310,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
             if (_phase == 3)
@@ -488,7 +488,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer())
+            if (!who->IsPlayer() && !who->IsNPCBot())
                 return;
 
             Talk(SAY_MOLGEIM_SLAY);
@@ -706,7 +706,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (!who->IsPlayer() || urand(0, 2))
+            if ((!who->IsPlayer() && !who->IsNPCBot()) || urand(0, 2))
                 return;
 
             Talk(SAY_BRUNDIR_SLAY);

@@ -324,7 +324,7 @@ struct boss_kaelthas : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->IsPlayer())
+        if (victim->IsPlayer() || victim->IsNPCBot())
             Talk(SAY_SLAY);
     }
 
@@ -1276,7 +1276,7 @@ class spell_kaelthas_nether_beam : public SpellScript
         for (ThreatContainer::StorageType::const_iterator itr = ThreatList.begin(); itr != ThreatList.end(); ++itr)
         {
             Unit* target = ObjectAccessor::GetUnit(*GetCaster(), (*itr)->getUnitGuid());
-            if (target && target->IsPlayer())
+            if (target && (target->IsPlayer() || target->IsNPCBot()))
                 targetList.push_back(target);
         }
 

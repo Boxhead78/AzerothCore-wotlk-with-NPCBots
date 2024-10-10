@@ -312,7 +312,7 @@ class spell_lurker_below_spout_cone : public SpellScript
     {
         targets.remove_if([this](WorldObject const* target) -> bool
         {
-            return !GetCaster()->HasInLine(target, 5.0f) || !target->IsPlayer() || target->ToUnit()->IsInWater();
+            return !GetCaster()->HasInLine(target, 5.0f) || !target->IsPlayer() || !target->IsNPCBot() || target->ToUnit()->IsInWater();
         });
     }
 

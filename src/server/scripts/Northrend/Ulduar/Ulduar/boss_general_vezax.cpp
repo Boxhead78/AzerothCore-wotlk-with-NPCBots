@@ -367,7 +367,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->IsPlayer())
+            if (who->IsPlayer() || who->IsNPCBot())
                 Talk(SAY_SLAY);
         }
 
@@ -486,7 +486,7 @@ class spell_aura_of_despair_aura : public AuraScript
         if (Unit* caster = GetCaster())
             if (Unit* target = GetTarget())
             {
-                if (!target->IsPlayer())
+                if (!target->IsPlayer() && !target->IsNPCBot())
                     return;
 
                 target->CastSpell(target, SPELL_AURA_OF_DESPAIR_2, true);

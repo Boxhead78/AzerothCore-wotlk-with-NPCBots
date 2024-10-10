@@ -143,7 +143,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer() && urand(0, 1))
+            if ((victim->IsPlayer() || victim->IsNPCBot()) && urand(0, 1))
                 Talk(YELL_SAC_KILL);
         }
 
@@ -291,7 +291,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->IsPlayer() && urand(0, 1))
+            if ((victim->IsPlayer() || victim->IsNPCBot()) && urand(0, 1))
                 Talk(YELL_SAC_KILL);
         }
 

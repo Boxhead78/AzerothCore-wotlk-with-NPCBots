@@ -657,7 +657,7 @@ void boss_flame_leviathan::boss_flame_leviathanAI::KilledUnit(Unit* who)
     if (who == me->GetVictim())
         events.RescheduleEvent(EVENT_PURSUE, 0ms);
 
-    if (who->IsPlayer())
+    if (who->IsPlayer() || who->IsNPCBot())
         Talk(FLAME_LEVIATHAN_SAY_SLAY);
 }
 
@@ -758,7 +758,7 @@ public:
 
         void PassengerBoarded(Unit* who, int8 seatId, bool apply) override
         {
-            if (!who->IsPlayer() || !me->GetVehicle())
+            if ((!who->IsPlayer() && !who->IsNPCBot()) || !me->GetVehicle())
                 return;
 
             who->ApplySpellImmune(63847, IMMUNITY_ID, 63847, apply); // SPELL_FLAME_VENTS_TRIGGER
@@ -829,7 +829,7 @@ public:
 
         bool CanAIAttack(Unit const* who) const override
         {
-            if (!who || !who->IsPlayer() || !who->GetVehicle() || who->GetVehicleBase()->GetEntry() != NPC_SEAT)
+            if (!who || (!who->IsPlayer() && !who->IsNPCBot()) || !who->GetVehicle() || who->GetVehicleBase()->GetEntry() != NPC_SEAT)
                 return false;
             return true;
         }
@@ -1927,7 +1927,7 @@ class spell_demolisher_ride_vehicle : public SpellScript
 
     SpellCastResult CheckCast()
     {
-        if (!GetCaster()->IsPlayer())
+        if (!GetCaster()->IsPlayer() && !GetCaster()->IsNPCBot())
             return SPELL_CAST_OK;
 
         Unit* target = this->GetExplTargetUnit();

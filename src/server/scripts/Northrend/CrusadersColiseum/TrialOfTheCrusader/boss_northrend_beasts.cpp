@@ -161,18 +161,18 @@ public:
                 case 0:
                     break;
                 case EVENT_SPELL_SNOBOLLED:
-                    if (t->IsPlayer())
+                    if (t->IsPlayer() || t->IsNPCBot())
                         me->CastSpell((Unit*)nullptr, SPELL_SNOBOLLED, true);
 
                     break;
                 case EVENT_SPELL_BATTER:
-                    if (t->IsPlayer())
+                    if (t->IsPlayer() || t->IsNPCBot())
                         me->CastSpell(t, SPELL_BATTER);
                     events.Repeat(6s, 8s);
                     break;
                 case EVENT_SPELL_FIRE_BOMB:
                     {
-                        if (!t->IsPlayer() && pInstance )
+                        if ((!t->IsPlayer() && !t->IsNPCBot()) && pInstance )
                         {
                             GuidVector validPlayers;
                             Map::PlayerList const& pl = me->GetMap()->GetPlayers();
@@ -198,7 +198,7 @@ public:
                     }
                     break;
                 case EVENT_SPELL_HEAD_CRACK:
-                    if (t->IsPlayer())
+                    if (t->IsPlayer() || t->IsNPCBot())
                         me->CastSpell(t, SPELL_HEAD_CRACK);
                     events.Repeat(30s, 35s);
                     break;

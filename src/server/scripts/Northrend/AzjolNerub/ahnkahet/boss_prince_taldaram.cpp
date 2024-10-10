@@ -307,7 +307,7 @@ struct boss_taldaram : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (!victim->IsPlayer())
+        if (!victim->IsPlayer() || !victim->IsNPCBot())
         {
             return;
         }
@@ -420,7 +420,7 @@ struct boss_taldaram : public BossAI
                             if (reference)
                             {
                                 Unit const* pTarget = ObjectAccessor::GetUnit(*me, reference->getUnitGuid());
-                                if (pTarget && pTarget->IsPlayer() && pTarget->IsAlive())
+                                if (pTarget && (pTarget->IsPlayer() || pTarget->IsNPCBot()) && pTarget->IsAlive())
                                 {
                                     ++count;
                                 }

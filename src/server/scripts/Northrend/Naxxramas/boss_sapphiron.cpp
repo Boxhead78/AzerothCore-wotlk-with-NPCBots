@@ -325,7 +325,7 @@ public:
                         auto i = me->GetThreatMgr().GetThreatList().begin();
                         for (; i != me->GetThreatMgr().GetThreatList().end(); ++i)
                         {
-                            if ((*i)->getTarget()->IsPlayer())
+                            if ((*i)->getTarget()->IsPlayer() || (*i)->getTarget()->IsNPCBot())
                             {
                                 bool inList = false;
                                 if (!blockList.empty())

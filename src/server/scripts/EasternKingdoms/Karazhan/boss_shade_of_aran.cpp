@@ -454,7 +454,7 @@ class spell_flamewreath_aura : public AuraScript
         {
             if (Unit* target = GetTarget())
             {
-                if (target->IsPlayer())
+                if (target->IsPlayer() || target->IsNPCBot())
                 {
                     target->CastSpell(target, SPELL_FLAME_WREATH_RAN_THRU, true);
 
