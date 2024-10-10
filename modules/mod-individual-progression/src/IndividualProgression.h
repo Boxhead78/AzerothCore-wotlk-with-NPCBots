@@ -21,21 +21,44 @@ typedef std::unordered_map<uint32, uint32> questXpMapType;
 
 enum ProgressionBossIDs
 {
-    RAGNAROS = 11502,
-    ONYXIA = 10184,
-    NEFARIAN = 11583,
-    CTHUN = 15727,
-    KELTHUZAD = 15990,
-    KELTHUZAD_40 = 351019,
-    MALCHEZAAR = 15690,
-    KAELTHAS = 19622,
-    ILLIDAN = 22917,
-    ZULJIN = 23863,
-    KILJAEDEN = 25315,
-    YOGGSARON = 33288,
-    ANUBARAK = 34564,
-    LICH_KING = 36597,
-    HALION = 39863
+    PB_RAGNAROS = 11502,
+    PB_ONYXIA = 10184,
+    PB_NEFARIAN = 11583,
+    PB_CTHUN = 15727,
+    PB_KELTHUZAD = 15990,
+    PB_KELTHUZAD_40 = 351019,
+    PB_MALCHEZAAR = 15690,
+    PB_KAELTHAS = 19622,
+    PB_ILLIDAN = 22917,
+    PB_ZULJIN = 23863,
+    PB_KILJAEDEN = 25315,
+    PB_YOGGSARON = 33288,
+    PB_ANUBARAK = 34564,
+    PB_LICH_KING = 36597,
+    PB_HALION = 39863
+};
+
+enum ProgressionAchievementIDs
+{
+    PA_RAGNAROS = 686,
+    PA_ONYXIA = 684,
+    PA_NEFARIAN = 685,
+    PA_CTHUN = 687,
+    PA_MALCHEZAAR = 690,
+    PA_KAELTHAS = 696,
+    PA_ILLIDAN = 697,
+    PA_ZULJIN = 688,
+    PA_KILJAEDEN = 698,
+    PA_KELTHUZAD_10 = 574,
+    PA_KELTHUZAD_25 = 575,
+    PA_YOGGSARON_10 = 2892,
+    PA_YOGGSARON_25 = 2893,
+    PA_ANUBARAK_10 = 3918,
+    PA_ANUBARAK_25 = 3812,
+    PA_LICH_KING_10 = 4530,
+    PA_LICH_KING_25 = 4597,
+    PA_HALION_10 = 4817,
+    PA_HALION_25 = 4815
 };
 
 enum BuffSpells
@@ -196,6 +219,7 @@ public:
     void AdjustWotLKStats(Player* player) const;
     bool hasCustomProgressionValue(uint32 creatureEntry);
     void checkKillProgression(Player* player, Creature* killed);
+    void checkAchievementProgression(Player* player, AchievementEntry const* achievement);
     static void LoadCustomProgressionEntries(const std::string& customProgressionString);
     static void AdjustStats(Player* player, float computedAdjustment, float computedHealingAdjustment);
     static float ComputeVanillaAdjustment(uint8 playerLevel, float configAdjustmentValue);

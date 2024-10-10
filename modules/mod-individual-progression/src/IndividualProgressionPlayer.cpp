@@ -315,8 +315,6 @@ public:
         return (currentState == otherPlayerState);
     }
 
-
-
     void OnCreatureKill(Player* killer, Creature* killed) override
     {
         sIndividualProgression->checkKillProgression(killer, killed);
@@ -334,6 +332,11 @@ public:
             if (killer->IsAtLootRewardDistance(member))
                 sIndividualProgression->checkKillProgression(member, killed);
         }
+    }
+
+    void OnAchiComplete(Player* player, AchievementEntry const* achievement) override
+    {
+        sIndividualProgression->checkAchievementProgression(player, achievement);
     }
 
     bool OnUpdateFishingSkill(Player* /*player*/, int32 /*skill*/, int32 /*zone_skill*/, int32 chance, int32 roll) override

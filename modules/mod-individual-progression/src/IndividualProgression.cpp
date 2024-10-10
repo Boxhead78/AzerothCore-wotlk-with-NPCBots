@@ -233,13 +233,13 @@ void IndividualProgression::checkKillProgression(Player* killer, Creature* kille
         }
         switch (killed->GetEntry())
         {
-            case RAGNAROS:
+            case PB_RAGNAROS:
                 UpdateProgressionState(killer, PROGRESSION_MOLTEN_CORE);
                 break;
-            case ONYXIA:
+            case PB_ONYXIA:
                 UpdateProgressionState(killer, PROGRESSION_ONYXIA);
                 break;
-            case NEFARIAN:
+            case PB_NEFARIAN:
                 if (requirePreAQQuests)
                 {
                     UpdateProgressionState(killer, PROGRESSION_BLACKWING_LAIR);
@@ -249,41 +249,112 @@ void IndividualProgression::checkKillProgression(Player* killer, Creature* kille
                     UpdateProgressionState(killer, PROGRESSION_PRE_AQ);
                 }
                 break;
-            case CTHUN:
+            case PB_CTHUN:
                 UpdateProgressionState(killer, PROGRESSION_AQ);
                 break;
-            case KELTHUZAD_40:
+            case PB_KELTHUZAD_40:
                 UpdateProgressionState(killer, PROGRESSION_NAXX40);
                 break;
-            case MALCHEZAAR:
+            case PB_MALCHEZAAR:
                 UpdateProgressionState(killer, PROGRESSION_TBC_TIER_1);
                 break;
-            case KAELTHAS:
+            case PB_KAELTHAS:
                 UpdateProgressionState(killer, PROGRESSION_TBC_TIER_2);
                 break;
-            case ILLIDAN:
+            case PB_ILLIDAN:
                 UpdateProgressionState(killer, PROGRESSION_TBC_TIER_3);
                 break;
-            case ZULJIN:
+            case PB_ZULJIN:
                 UpdateProgressionState(killer, PROGRESSION_TBC_TIER_4);
                 break;
-            case KILJAEDEN:
+            case PB_KILJAEDEN:
                 UpdateProgressionState(killer, PROGRESSION_TBC_TIER_5);
                 break;
-            case KELTHUZAD:
+            case PB_KELTHUZAD:
                 UpdateProgressionState(killer, PROGRESSION_WOTLK_TIER_1);
                 break;
-            case YOGGSARON:
+            case PB_YOGGSARON:
                 UpdateProgressionState(killer, PROGRESSION_WOTLK_TIER_2);
                 break;
-            case ANUBARAK:
+            case PB_ANUBARAK:
                 UpdateProgressionState(killer, PROGRESSION_WOTLK_TIER_3);
                 break;
-            case LICH_KING:
+            case PB_LICH_KING:
                 UpdateProgressionState(killer, PROGRESSION_WOTLK_TIER_4);
                 break;
-            case HALION:
+            case PB_HALION:
                 UpdateProgressionState(killer, PROGRESSION_WOTLK_TIER_5);
+                break;
+        }
+}
+
+
+void IndividualProgression::checkAchievementProgression(Player* player, AchievementEntry const* achievement)
+{
+        if (!enabled)
+        {
+            return;
+        }
+
+        if (disableDefaultProgression)
+        {
+            return;
+        }
+        switch (achievement->ID)
+        {
+            case PA_RAGNAROS:
+                UpdateProgressionState(player, PROGRESSION_MOLTEN_CORE);
+                break;
+            case PA_ONYXIA:
+                UpdateProgressionState(player, PROGRESSION_ONYXIA);
+                break;
+            case PA_NEFARIAN:
+                if (requirePreAQQuests)
+                {
+                    UpdateProgressionState(player, PROGRESSION_BLACKWING_LAIR);
+                }
+                else
+                {
+                    UpdateProgressionState(player, PROGRESSION_PRE_AQ);
+                }
+                break;
+            case PA_CTHUN:
+                UpdateProgressionState(player, PROGRESSION_AQ);
+                break;
+            case PA_MALCHEZAAR:
+                UpdateProgressionState(player, PROGRESSION_TBC_TIER_1);
+                break;
+            case PA_KAELTHAS:
+                UpdateProgressionState(player, PROGRESSION_TBC_TIER_2);
+                break;
+            case PA_ILLIDAN:
+                UpdateProgressionState(player, PROGRESSION_TBC_TIER_3);
+                break;
+            case PA_ZULJIN:
+                UpdateProgressionState(player, PROGRESSION_TBC_TIER_4);
+                break;
+            case PA_KILJAEDEN:
+                UpdateProgressionState(player, PROGRESSION_TBC_TIER_5);
+                break;
+            case PA_KELTHUZAD_10:
+            case PA_KELTHUZAD_25:
+                UpdateProgressionState(player, PROGRESSION_WOTLK_TIER_1);
+                break;
+            case PA_YOGGSARON_10:
+            case PA_YOGGSARON_25:
+                UpdateProgressionState(player, PROGRESSION_WOTLK_TIER_2);
+                break;
+            case PA_ANUBARAK_10:
+            case PA_ANUBARAK_25:
+                UpdateProgressionState(player, PROGRESSION_WOTLK_TIER_3);
+                break;
+            case PA_LICH_KING_10:
+            case PA_LICH_KING_25:
+                UpdateProgressionState(player, PROGRESSION_WOTLK_TIER_4);
+                break;
+            case PA_HALION_10:
+            case PA_HALION_25:
+                UpdateProgressionState(player, PROGRESSION_WOTLK_TIER_5);
                 break;
         }
 }
