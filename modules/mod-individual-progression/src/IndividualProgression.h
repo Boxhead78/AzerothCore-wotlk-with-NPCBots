@@ -47,7 +47,7 @@ enum ProgressionAchievementIDs
     PA_MALCHEZAAR = 690,
     PA_KAELTHAS = 696,
     PA_ILLIDAN = 697,
-    PA_ZULJIN = 688,
+    PA_ZULJIN = 691,
     PA_KILJAEDEN = 698,
     PA_KELTHUZAD_10 = 574,
     PA_KELTHUZAD_25 = 575,
