@@ -1217,8 +1217,15 @@ void Creature::CalculateMinMaxDamage(WeaponAttackType attType, bool normalized, 
                     maxDamage *= (0.2 + (0.02 * GetLevel()));
                 }
 
+                //TBC Early Level Nerf - For BloodElf Draenei starting areas
+                if (mapEntry->Expansion() == CONTENT_61_70 && creatureMap->IsNonRaidDungeon() && !creatureMap->IsHeroic() && GetLevel() <= 40)
+                {
+                    minDamage *= (0.2 + (0.02 * GetLevel()));
+                    maxDamage *= (0.2 + (0.02 * GetLevel()));
+                }
+
                 //TBC Buff
-                if (mapEntry->Expansion() == CONTENT_61_70)
+                if (mapEntry->Expansion() == CONTENT_61_70 && GetLevel() > 40)
                 {
                     minDamage *= 1.33;
                     maxDamage *= 1.33;

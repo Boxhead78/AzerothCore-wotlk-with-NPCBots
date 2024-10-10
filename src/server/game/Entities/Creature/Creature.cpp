@@ -1681,8 +1681,12 @@ void Creature::SelectLevel(bool changelevel)
             //TBC Content
             if (mapEntry->Expansion() == CONTENT_61_70)
             {
+                //TBC Early Level Nerf - For BloodElf Draenei starting areas
+                if (!creatureMap->IsNonRaidDungeon() && !creatureMap->IsRaid() && GetLevel() <= 40)
+                    healthmod *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
+
                 //Open World
-                if (!creatureMap->IsNonRaidDungeon() && !creatureMap->IsRaid())
+                if (!creatureMap->IsNonRaidDungeon() && !creatureMap->IsRaid() && GetLevel() > 40)
                     healthmod *= 1.44;
 
                 //Dungeons
@@ -2028,8 +2032,12 @@ bool Creature::LoadCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool ad
                 //TBC Content
                 if (mapEntry->Expansion() == CONTENT_61_70)
                 {
+                    //TBC Early Level Nerf - For BloodElf Draenei starting areas
+                    if (!map->IsNonRaidDungeon() && !map->IsRaid() && GetLevel() <= 40)
+                        curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
+
                     //Open World
-                    if (!map->IsNonRaidDungeon() && !map->IsRaid())
+                    if (!map->IsNonRaidDungeon() && !map->IsRaid() && GetLevel() > 40)
                         curhealth *= 1.44;
 
                     //Dungeons
@@ -4377,8 +4385,12 @@ bool Creature::LoadBotCreatureFromDB(ObjectGuid::LowType spawnId, Map* map, bool
                 //TBC Content
                 if (mapEntry->Expansion() == CONTENT_61_70)
                 {
+                    //TBC Early Level Nerf - For BloodElf Draenei starting areas
+                    if (!map->IsNonRaidDungeon() && !map->IsRaid() && GetLevel() <= 40)
+                        curhealth *= (0.33 + (0.02 * GetLevel())); //Nerf hp from level 40 to 1 gradually
+
                     //Open World
-                    if (!map->IsNonRaidDungeon() && !map->IsRaid())
+                    if (!map->IsNonRaidDungeon() && !map->IsRaid() && GetLevel() > 40)
                         curhealth *= 1.44;
 
                     //Dungeons

@@ -12327,8 +12327,12 @@ uint32 Unit::SpellDamageBonusDone(Unit* victim, SpellInfo const* spellProto, uin
                 if (mapEntry->Expansion() == CONTENT_1_60 && GetLevel() <= 40)
                     DoneTotalMod *= (0.2 + (0.02 * GetLevel()));
 
+                //TBC Early Level Nerf - For BloodElf Draenei starting areas
+                if (mapEntry->Expansion() == CONTENT_61_70 && creatureMap->IsNonRaidDungeon() && !creatureMap->IsHeroic() && GetLevel() <= 40)
+                    DoneTotalMod *= (0.2 + (0.02 * GetLevel()));
+
                 //TBC Buff
-                if (mapEntry->Expansion() == CONTENT_61_70)
+                if (mapEntry->Expansion() == CONTENT_61_70 && GetLevel() > 40)
                     DoneTotalMod *= 1.33;
 
                 //TBC Dungeon Heroic Nerf
