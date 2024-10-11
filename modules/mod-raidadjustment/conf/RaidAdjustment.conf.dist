@@ -6,8 +6,20 @@
 # Enable the module? (1: true | 0: false)
 RaidAdjustment.Enable = 1
 
-# Percent of melee damage taken
-RaidAdjustment.DamageTaken.Melee = 0.75
+# Percent of melee damage taken in classic raids
+RaidAdjustment.Classic.DamageTaken.Melee = 1.0
 
-# Percent of spell damage taken
-RaidAdjustment.DamageTaken.Spell = 0.75
+# Percent of spell damage taken classic raids
+RaidAdjustment.Classic.DamageTaken.Spell = 1.0
+
+# Percent of melee damage taken in tbc raids
+RaidAdjustment.TBC.DamageTaken.Melee = 1.0
+
+# Percent of spell damage taken tbc raids
+RaidAdjustment.TBC.DamageTaken.Spell = 1.0
+
+# Percent of melee damage taken in wotlk raids
+RaidAdjustment.WotLK.DamageTaken.Melee = 1.0
+
+# Percent of spell damage taken wotlk raids
+RaidAdjustment.WotLK.DamageTaken.Spell = 1.0

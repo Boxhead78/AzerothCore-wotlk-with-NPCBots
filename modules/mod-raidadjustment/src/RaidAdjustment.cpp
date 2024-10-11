@@ -5,8 +5,12 @@
 #include "Unit.h"
 
 bool RaidAdjustmentEnabled;
-float RaidAdjustmentMeleeDamageMult;
-float RaidAdjustmentSpellDamageMult;
+float RaidAdjustmentClassicMeleeDamageMult;
+float RaidAdjustmentClassicSpellDamageMult;
+float RaidAdjustmentTBCMeleeDamageMult;
+float RaidAdjustmentTBCSpellDamageMult;
+float RaidAdjustmentWotLKMeleeDamageMult;
+float RaidAdjustmentWotLKSpellDamageMult;
 
 class RaidAdjustmentConfig : public WorldScript
 {
@@ -28,8 +32,12 @@ public:
         RaidAdjustmentEnabled = sConfigMgr->GetOption<bool>("RaidAdjustment.Enable", 1);
 
 		//Balancing
-        RaidAdjustmentMeleeDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.DamageTaken.Melee", 0.75);
-        RaidAdjustmentSpellDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.DamageTaken.Spell", 0.75);
+        RaidAdjustmentClassicMeleeDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.Classic.DamageTaken.Melee", 1.0);
+        RaidAdjustmentClassicSpellDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.Classic.DamageTaken.Spell", 1.0);
+        RaidAdjustmentTBCMeleeDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.TBC.DamageTaken.Melee", 1.0);
+        RaidAdjustmentTBCSpellDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.TBC.DamageTaken.Spell", 1.0);
+        RaidAdjustmentWotLKMeleeDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.WotLK.DamageTaken.Melee", 1.0);
+        RaidAdjustmentWotLKSpellDamageMult = sConfigMgr->GetOption<float>("RaidAdjustment.WotLK.DamageTaken.Spell", 1.0);
     }
 };
 
@@ -53,7 +61,14 @@ public:
             return;
         }
 
-        damage *= RaidAdjustmentMeleeDamageMult;
+        if (sMapStore.LookupEntry(target->GetMapId())->Expansion() == CONTENT_1_60)
+            damage *= RaidAdjustmentClassicSpellDamageMult;
+
+        if (sMapStore.LookupEntry(target->GetMapId())->Expansion() == CONTENT_61_70)
+            damage *= RaidAdjustmentTBCSpellDamageMult;
+
+        if (sMapStore.LookupEntry(target->GetMapId())->Expansion() == CONTENT_71_80)
+            damage *= RaidAdjustmentWotLKSpellDamageMult;
     }
     void ModifyMeleeDamage(Unit* target, Unit* attacker, uint32& damage) override
     {
@@ -70,7 +85,14 @@ public:
             return;
         }
 
-        damage *= RaidAdjustmentSpellDamageMult;
+        if (sMapStore.LookupEntry(target->GetMapId())->Expansion() == CONTENT_1_60)
+            damage *= RaidAdjustmentClassicMeleeDamageMult;
+
+        if (sMapStore.LookupEntry(target->GetMapId())->Expansion() == CONTENT_61_70)
+            damage *= RaidAdjustmentTBCMeleeDamageMult;
+
+        if (sMapStore.LookupEntry(target->GetMapId())->Expansion() == CONTENT_71_80)
+            damage *= RaidAdjustmentWotLKMeleeDamageMult;
     }
 };
 
