@@ -299,6 +299,7 @@ public:
         void UpdateAI(uint32 diff) override
         {
             events.Update(diff);
+
             switch (events.ExecuteEvent())
             {
                 case EVENT_SINGULARITY_DEATH:
@@ -366,14 +367,16 @@ class spell_muru_darkness_aura : public AuraScript
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
     {
-        return ValidateSpellInfo({ SPELL_SUMMON_DARK_FIEND });
+        return true;
+        //return ValidateSpellInfo({ SPELL_SUMMON_DARK_FIEND });
     }
 
     void OnPeriodic(AuraEffect const* aurEff)
     {
         if (aurEff->GetTickNumber() == 3)
             for (uint8 i = 0; i < 8; ++i)
-                GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_SUMMON_DARK_FIEND + i, true);
+                return;
+                //GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_SUMMON_DARK_FIEND + i, true);
     }
 
     void Register() override
@@ -421,7 +424,8 @@ class spell_entropius_void_zone_visual_aura : public AuraScript
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
     {
-        return ValidateSpellInfo({ SPELL_SUMMON_DARK_FIEND_ENTROPIUS });
+        return true;
+        //return ValidateSpellInfo({ SPELL_SUMMON_DARK_FIEND_ENTROPIUS });
     }
 
     void HandleApply(AuraEffect const*  /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -431,7 +435,8 @@ class spell_entropius_void_zone_visual_aura : public AuraScript
 
     void HandleRemove(AuraEffect const*  /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
-        GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_SUMMON_DARK_FIEND_ENTROPIUS, true);
+        return;
+        //GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_SUMMON_DARK_FIEND_ENTROPIUS, true);
     }
 
     void Register() override

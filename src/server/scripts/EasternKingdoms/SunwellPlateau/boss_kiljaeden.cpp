@@ -262,7 +262,7 @@ public:
                         Map::PlayerList const& players = me->GetMap()->GetPlayers();
                         for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                             if (Player* player = itr->GetSource())
-                                if (!player->IsGameMaster() && me->GetDistance2d(player) < 60.0f && player->IsAlive())
+                                if (!player->IsGameMaster() && me->GetDistance2d(player) < 60.0f && (player->IsAlive() || player->GetNpcBotsCount() > 0))
                                 {
                                     events.ScheduleEvent(EVENT_CHECK_PLAYERS, 1000);
                                     return;
@@ -520,7 +520,7 @@ public:
                         events.ScheduleEvent(EVENT_SPELL_SINISTER_REFLECTION, 500);
                         events.ScheduleEvent(EVENT_SPELL_SHADOW_SPIKE, 1200);
                         events.ScheduleEvent(EVENT_SPELL_FLAME_DART, 3000);
-                        events.RescheduleEvent(EVENT_SPELL_DARKNESS, 16000); // will be delayed by 29 secs
+                        events.RescheduleEvent(EVENT_SPELL_DARKNESS, 24000); // will be delayed by 29 secs
                         break;
                     }
                     events.ScheduleEvent(EVENT_CHECK_HEALTH85, 0);
@@ -539,7 +539,7 @@ public:
                         events.DelayEvents(2000);
                         events.ScheduleEvent(EVENT_SPELL_SINISTER_REFLECTION, 500);
                         events.ScheduleEvent(EVENT_SPELL_SHADOW_SPIKE, 1200);
-                        events.RescheduleEvent(EVENT_SPELL_DARKNESS, 15000); // will be delayed by 29 secs
+                        events.RescheduleEvent(EVENT_SPELL_DARKNESS, 20000); // will be delayed by 29 secs
                         events.ScheduleEvent(EVENT_SPELL_ARMAGEDDON, 10000);
                         break;
                     }
@@ -563,7 +563,7 @@ public:
                         events.DelayEvents(4000);
                         events.ScheduleEvent(EVENT_SPELL_SINISTER_REFLECTION, 500);
                         events.ScheduleEvent(EVENT_SPELL_SHADOW_SPIKE, 1200);
-                        events.RescheduleEvent(EVENT_SPELL_DARKNESS, 15000); // will be delayed by 29 secs
+                        events.RescheduleEvent(EVENT_SPELL_DARKNESS, 20000); // will be delayed by 29 secs
                         events.ScheduleEvent(EVENT_SPELL_ARMAGEDDON, 1500);
                         break;
                     }
@@ -629,7 +629,7 @@ public:
                 case EVENT_SPELL_DARKNESS:
                     Talk(EMOTE_KJ_DARKNESS);
                     me->CastSpell(me, SPELL_DARKNESS_OF_A_THOUSAND_SOULS, false);
-                    events.ScheduleEvent(EVENT_SPELL_DARKNESS, phase == PHASE_SACRIFICE ? 20000 : 45000);
+                    events.ScheduleEvent(EVENT_SPELL_DARKNESS, phase == PHASE_SACRIFICE ? 30000 : 60000);
                     events.DelayEvents(8000);
                     break;
                 case EVENT_SPELL_ARMAGEDDON:

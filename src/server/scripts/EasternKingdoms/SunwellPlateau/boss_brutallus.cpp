@@ -99,7 +99,7 @@ public:
             events.ScheduleEvent(EVENT_SPELL_SLASH, 11000);
             events.ScheduleEvent(EVENT_SPELL_STOMP, 30000);
             events.ScheduleEvent(EVENT_SPELL_BURN, 45000);
-            events.ScheduleEvent(EVENT_SPELL_BERSERK, 360000);
+            events.ScheduleEvent(EVENT_SPELL_BERSERK, 500000);
         }
 
         void KilledUnit(Unit* victim) override
@@ -487,7 +487,7 @@ class spell_brutallus_burn : public SpellScript
     {
         PreventHitDefaultEffect(effIndex);
         if (Unit* target = GetHitUnit())
-            if (!target->HasAura(SPELL_BURN_DAMAGE))
+            if (!target->HasAura(SPELL_BURN_DAMAGE) && !target->IsNPCBot())
                 target->CastSpell(target, SPELL_BURN_DAMAGE, true);
     }
 

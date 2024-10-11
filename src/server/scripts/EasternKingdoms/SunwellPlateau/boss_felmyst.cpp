@@ -263,7 +263,7 @@ public:
                     break;
                 case EVENT_INTRO_4:
                     events.ScheduleEvent(EVENT_LAND, 3000, 1);
-                    events.ScheduleEvent(EVENT_SPELL_BERSERK, 600000);
+                    events.ScheduleEvent(EVENT_SPELL_BERSERK, 750000);
                     me->SetInCombatWithZone();
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     me->CastSpell(me, SPELL_NOXIOUS_FUMES, true);
@@ -454,7 +454,8 @@ public:
         void SpellHitTarget(Unit*, SpellInfo const* spellInfo) override
         {
             if (spellInfo->Id == SPELL_DEMONIC_VAPOR)
-                me->CastSpell(me, SPELL_SUMMON_BLAZING_DEAD, true);
+                return;
+                //me->CastSpell(me, SPELL_SUMMON_BLAZING_DEAD, true);
         }
 
         void UpdateAI(uint32 diff) override
