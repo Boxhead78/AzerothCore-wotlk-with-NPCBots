@@ -1157,7 +1157,7 @@ private:
 
     void addNewAuctionBuyerBotBid(Player* AHBplayer, AHBConfig* config, WorldSession* session);
 
-    static uint32 getPrice(const ItemTemplate* item, bool useBuyPrice = false);
+    static uint32 getPrice(const ItemTemplate* item, bool useBuyPrice = false, bool isSeller);
     static double getCustomScaling(const ItemTemplate* item);
 
     AuctionHouseBot();

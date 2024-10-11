@@ -363,7 +363,7 @@ void AuctionHouseBot::addNewAuctions(Player* AHBplayer, AHBConfig* config)
             if (randomPropertyId != 0)
                 item->SetItemRandomProperties(randomPropertyId);
 
-            uint64 buyoutPrice = getPrice(prototype, UseBuyPriceForSeller) * getCustomScaling(prototype) / 100;
+            uint64 buyoutPrice = getPrice(prototype, UseBuyPriceForSeller, true) * getCustomScaling(prototype) / 100;
             uint64 bidPrice = 0;
             uint32 stackCount = 1;
 
@@ -400,12 +400,6 @@ void AuctionHouseBot::addNewAuctions(Player* AHBplayer, AHBConfig* config)
                     break;
             }
             item->SetCount(stackCount);
-
-            if (bidPrice == 0 || buyoutPrice == 0)
-            {
-                bidPrice = 1;
-                buyoutPrice = 2;
-            }
 
             uint32 dep = sAuctionMgr->GetAuctionDeposit(ahEntry, etime, item, stackCount);
 
@@ -702,7 +696,7 @@ void AuctionHouseBot::addNewAuctionBuyerBotBid(Player* AHBplayer, AHBConfig* con
     }
 }
 
-uint32 AuctionHouseBot::getPrice(const ItemTemplate* item, bool useBuyPrice)
+uint32 AuctionHouseBot::getPrice(const ItemTemplate* item, bool useBuyPrice, bool isSeller)
 {
     uint32 price = 0;
 
@@ -715,11 +709,14 @@ uint32 AuctionHouseBot::getPrice(const ItemTemplate* item, bool useBuyPrice)
         price = item->SellPrice != 0 ? item->SellPrice : (item->BuyPrice / 5);
     }
 
-
-    if (price == 0 && item->Class == ITEM_CLASS_CONSUMABLE && item->SubClass == ITEM_SUBCLASS_ITEM_ENHANCEMENT) {
+    if (price == 0 && item->Class == ITEM_CLASS_CONSUMABLE && item->SubClass == ITEM_SUBCLASS_ITEM_ENHANCEMENT)
+    {
 
         price = 500 * item->ItemLevel - 250;
     }
+
+    if (isSeller && price == 0)
+        price = 10000000;
 
     return price;
 }
