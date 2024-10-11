@@ -587,7 +587,7 @@ void AuctionHouseBot::addNewAuctionBuyerBotBid(Player* AHBplayer, AHBConfig* con
         // check that bid has acceptable value and take bid based on vendorprice, stacksize and quality
         if (prototype->Quality <= AHB_MAX_QUALITY)
         {
-            uint32 itemPrice = getPrice(prototype, UseBuyPriceForBuyer) * getCustomScaling(prototype) / 100;
+            uint32 itemPrice = getPrice(prototype, UseBuyPriceForBuyer, false) * getCustomScaling(prototype) / 300;
             if (currentprice < itemPrice * pItem->GetCount() * config->GetBuyerPrice(prototype->Quality))
                 bidMax = itemPrice * pItem->GetCount() * config->GetBuyerPrice(prototype->Quality);
         } else
