@@ -779,6 +779,20 @@ double AuctionHouseBot::getCustomScaling(const ItemTemplate* item)
         }
     }
 
+    if (item->Class == ITEM_CLASS_WEAPON || item->Class == ITEM_CLASS_ARMOR)
+    {
+        if (item->RequiredLevel >= 80)
+            return 3000;
+        else if (item->RequiredLevel >= 71)
+            return 2500;
+        else if (item->RequiredLevel >= 70)
+            return 2000;
+        else if (item->RequiredLevel >= 61)
+            return 1500;
+        else if (item->RequiredLevel >= 60)
+            return 1000;
+    }
+
     return 100;
 }
 
