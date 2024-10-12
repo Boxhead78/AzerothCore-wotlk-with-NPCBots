@@ -86,6 +86,7 @@ bool _enableNpcBotsRaids;
 bool _enableNpcBotsBGs;
 bool _enableNpcBotsArenas;
 bool _enableDungeonFinder;
+bool _enableNpcBotsPremade;
 bool _limitNpcBotsDungeons;
 bool _limitNpcBotsRaids;
 bool _fillNpcBotsDungeons;
@@ -152,6 +153,8 @@ bool _bothk_achievements_enable;
 bool _botManaRegenCheat;
 bool _botHealingCheat;
 bool _botRaidRevive;
+bool _untarget_wnpc_questgiver;
+bool _untarget_wnpc_flightmaster;
 float _botStatLimits_dodge;
 float _botStatLimits_parry;
 float _botStatLimits_block;
@@ -370,6 +373,7 @@ void BotMgr::LoadConfig(bool reload)
     _enableNpcBotsBGs               = sConfigMgr->GetBoolDefault("NpcBot.Enable.BG", false);
     _enableNpcBotsArenas            = sConfigMgr->GetBoolDefault("NpcBot.Enable.Arena", false);
     _enableDungeonFinder            = sConfigMgr->GetBoolDefault("NpcBot.Enable.DungeonFinder", true);
+    _enableNpcBotsPremade           = sConfigMgr->GetBoolDefault("NpcBot.Premade.Enable", false);
     _limitNpcBotsDungeons           = sConfigMgr->GetBoolDefault("NpcBot.Limit.Dungeon", true);
     _limitNpcBotsRaids              = sConfigMgr->GetBoolDefault("NpcBot.Limit.Raid", true);
     _fillNpcBotsDungeons            = sConfigMgr->GetBoolDefault("NpcBot.Fill.Dungeon", false);
@@ -431,6 +435,8 @@ void BotMgr::LoadConfig(bool reload)
     _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
     _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
     _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+    _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+    _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
     _enrageOnDismiss                = sConfigMgr->GetBoolDefault("NpcBot.EnrageOnDismiss", true);
     _botStatLimits                  = sConfigMgr->GetBoolDefault("NpcBot.Stats.Limits.Enable", false);
     _botStatLimits_dodge            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Dodge", 95.0f);
@@ -735,6 +741,11 @@ bool BotMgr::IsNpcBotDungeonFinderEnabled()
     return _enableDungeonFinder;
 }
 
+bool BotMgr::IsNpcBotsPremadeEnabled()
+{
+    return _enableNpcBotsPremade;
+}
+
 bool BotMgr::DisplayEquipment()
 {
     return _displayEquipment;
@@ -873,6 +884,15 @@ bool BotMgr::IsWanderingClassEnabled(uint8 m_class)
         default:
             return true;
     }
+}
+
+bool BotMgr::EnableWanderingUntargetNpcQuestgiver()
+{
+    return _untarget_wnpc_questgiver;
+}
+bool BotMgr::EnableWanderingUntargetNpcFlightmaster()
+{
+    return _untarget_wnpc_flightmaster;
 }
 
 bool BotMgr::HideBotSpawns()
@@ -1666,6 +1686,7 @@ void BotMgr::_teleportBot(Creature* bot, Map* newMap, float x, float y, float z,
             bot->SetMap(newMap);
             if (!bot->IsWandererBot() && !botai->CanAppearInWorld())
             {
+                botai->AbortTeleport();
                 TeleportFinishEvent* delayedTeleportEvent = new TeleportFinishEvent(botai, reset);
                 botai->GetEvents()->AddEvent(delayedTeleportEvent, botai->GetEvents()->CalculateTime(urand(5000, 8000)));
                 botai->SetTeleportFinishEvent(delayedTeleportEvent);
@@ -1731,13 +1752,12 @@ void BotMgr::_teleportBot(Creature* bot, Map* newMap, float x, float y, float z,
             return;
         }
 
-        botai->AbortTeleport();
-
         //update group member online state
         if (Group* gr = bot->GetBotOwner()->GetGroup())
             if (gr->IsMember(bot->GetGUID()))
                 gr->SendUpdate();
 
+        botai->AbortTeleport();
         TeleportFinishEvent* finishEvent = new TeleportFinishEvent(botai, reset);
         uint64 delay = quick ? urand(500, 1500) : urand(5000, 8000);
         botai->GetEvents()->AddEvent(finishEvent, botai->GetEvents()->CalculateTime(delay));
