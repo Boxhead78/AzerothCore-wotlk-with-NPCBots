@@ -36,7 +36,7 @@ public:
     /*
     void OnSetMaxLevel(Player* player, uint32& maxPlayerLevel) override
     {
-        if (!sIndividualProgression->enabled)
+        if (!sIndividualProgression->enabled || isExcludedFromProgression(player))
         {
             return;
         }
@@ -92,7 +92,7 @@ public:
     void OnAfterUpdateMaxHealth(Player* player, float& value) override
     {
         // TODO: This should be adjust to use an aura like damage adjustment. This is more robust to update when changing equipment, etc.
-        if (!sIndividualProgression->enabled)
+        if (!sIndividualProgression->enabled || isExcludedFromProgression(player))
         {
             return;
         }
@@ -130,7 +130,7 @@ public:
 
     void OnQuestComputeXP(Player* player, Quest const* quest, uint32& xpValue) override
     {
-        if (!sIndividualProgression->enabled || !sIndividualProgression->questXpFix)
+        if (!sIndividualProgression->enabled || !sIndividualProgression->questXpFix || isExcludedFromProgression(player))
         {
             return;
         }
@@ -147,7 +147,7 @@ public:
 
     void OnGiveXP(Player* player, uint32& amount, Unit* /*victim*/, uint8 xpSource) override
     {
-        if (!sIndividualProgression->enabled)
+        if (!sIndividualProgression->enabled || isExcludedFromProgression(player))
         {
             return;
         }
@@ -188,9 +188,20 @@ public:
         }
     }
 
+    bool isExcludedFromProgression(Player* player)
+    {
+        if(!sIndividualProgression->excludeAccounts) {
+            return false;
+        }
+        std::string accountName;
+        bool accountNameFound = AccountMgr::GetName(player->GetSession()->GetAccountId(), accountName);
+        std::regex excludedAccountsRegex (sIndividualProgression->excludedAccountsRegex);
+        return (accountNameFound && std::regex_match(accountName, excludedAccountsRegex));
+    }
+
     bool OnBeforeTeleport(Player* player, uint32 mapid, float x, float y, float z, float /*orientation*/, uint32 /*options*/, Unit* /*target*/) override
     {
-        if (!sIndividualProgression->enabled || player->IsGameMaster())
+        if (!sIndividualProgression->enabled || player->IsGameMaster() || isExcludedFromProgression(player))
         {
             return true;
         }
@@ -266,7 +277,7 @@ public:
 
     void OnPlayerCompleteQuest(Player* player, Quest const* quest) override
     {
-        if (!sIndividualProgression->enabled)
+        if (!sIndividualProgression->enabled || isExcludedFromProgression(player))
         {
             return;
         }
@@ -293,7 +304,7 @@ public:
 
     bool CanGroupInvite(Player* player, std::string& membername) override
     {
-        if (!sIndividualProgression->enabled || !sIndividualProgression->enforceGroupRules)
+        if (!sIndividualProgression->enabled || !sIndividualProgression->enforceGroupRules || isExcludedFromProgression(player))
         {
             return true;
         }
@@ -305,7 +316,7 @@ public:
 
     bool CanGroupAccept(Player* player, Group* group) override
     {
-        if (!sIndividualProgression->enabled || !sIndividualProgression->enforceGroupRules)
+        if (!sIndividualProgression->enabled || !sIndividualProgression->enforceGroupRules || isExcludedFromProgression(player))
         {
             return true;
         }
@@ -339,9 +350,9 @@ public:
         sIndividualProgression->checkAchievementProgression(player, achievement);
     }
 
-    bool OnUpdateFishingSkill(Player* /*player*/, int32 /*skill*/, int32 /*zone_skill*/, int32 chance, int32 roll) override
+    bool OnUpdateFishingSkill(Player* player, int32 /*skill*/, int32 /*zone_skill*/, int32 chance, int32 roll) override
     {
-        if (!sIndividualProgression->enabled || !sIndividualProgression->fishingFix)
+        if (!sIndividualProgression->enabled || !sIndividualProgression->fishingFix || isExcludedFromProgression(player))
             return true;
         if (chance < roll)
             return false;
