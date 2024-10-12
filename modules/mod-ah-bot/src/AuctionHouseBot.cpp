@@ -716,7 +716,7 @@ uint32 AuctionHouseBot::getPrice(const ItemTemplate* item, bool useBuyPrice, boo
     }
 
     if (isSeller && price == 0)
-        price = 10000000;
+        price = 1000000;
 
     return price;
 }
