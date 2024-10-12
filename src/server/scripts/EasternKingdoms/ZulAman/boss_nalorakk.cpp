@@ -266,12 +266,6 @@ struct boss_nalorakk : public BossAI
         });
     }
 
-    void JustDied(Unit* /*killer*/) override
-    {
-        Talk(SAY_DEATH);
-        instance->SetData(DATA_NALORAKKEVENT, DONE);
-    }
-
     void ShapeShift(bool currentlyInBearForm)
     {
         if (currentlyInBearForm)
