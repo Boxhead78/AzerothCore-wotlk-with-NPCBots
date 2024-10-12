@@ -1254,6 +1254,9 @@ void BotDataMgr::LoadWanderMap(bool reload)
         auto const& vec = spawn_node_levels[k];
         for (uint32 i = min_spawn_level; i <= max_spawn_level; ++i)
         {
+            if (vec[i - 1] == false && k == uint8(TEAM_NEUTRAL) && spawn_node_levels[uint8(TEAM_ALLIANCE)][i - 1] == true && spawn_node_levels[uint8(TEAM_HORDE)][i - 1] == true)
+                continue;
+
             if (vec[i - 1] == false)
                 LOG_ERROR("server.loading", "No {} spawn node found for level {}! Wandering bots may cause a crash!", team_strs[k], i);
         }
