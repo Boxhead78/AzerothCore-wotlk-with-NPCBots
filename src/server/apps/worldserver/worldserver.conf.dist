@@ -5110,10 +5110,16 @@ Rate.Creature.Elite.BOSS_RAID.HP   = 1.0
 Creature.NewBalance.Active = 1
 
 #    Enable or disable NPCBot mana regen cheat in raids/dungeons
-NpcBot.ManaRegenCheat.Active = 1
+NpcBot.Cheats.ManaRegen.Active = 1
 
 #    Enable or disable NPCBot healing cheat in raids/dungeons (Heal is multiplied x2 in dungeons and raids)
-NpcBot.HealingCheat.Active = 1
+NpcBot.Cheats.Healing.Active = 1
+
+#    Scale how strong the cheats are
+NpcBot.Cheats.Factor = 1
+
+#    NPCBot level at which the cheats will activate (1-80)
+NpcBot.Cheats.StartingLevel = 60
 
 #    Enable or disable NPCBot revive in raids
 NpcBot.ReviveRaidInstant.Active = 0

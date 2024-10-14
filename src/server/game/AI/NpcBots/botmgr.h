@@ -136,6 +136,8 @@ class AC_GAME_API BotMgr
         static bool IsManaRegenCheatActive();
         static bool IsHealingCheatActive();
         static bool IsRaidReviveActive();
+        static float GetBotsCheatFactor();
+        static uint8 GetBotsCheatStartLevel();
         static uint8 GetMaxClassBots();
         static uint8 GetMaxAccountBots();
         static uint8 GetHealTargetIconFlags();

@@ -7260,7 +7260,7 @@ void bot_ai::_OnManaRegenUpdate() const
         power_regen_mp5 += 0.024f * _getTotalBotStat(BOT_STAT_MOD_INTELLECT);
 
     //Mana regen Cheat
-    if (BotMgr::IsManaRegenCheatActive())
+    if (BotMgr::IsManaRegenCheatActive() && mylevel > BotMgr::GetBotsCheatStartLevel())
     {
         if (me->GetMap()->IsRaid())
             power_regen_mp5 *= 15;
@@ -7273,6 +7273,8 @@ void bot_ai::_OnManaRegenUpdate() const
 
         if ((me->GetMap()->IsRaid() || me->GetMap()->IsDungeon()) && (me->GetBotClass() == BOT_CLASS_PRIEST || me->GetBotClass() == BOT_CLASS_PALADIN))
             power_regen_mp5 *= 2;
+
+        power_regen_mp5 *= BotMgr::GetBotsCheatFactor();
     }
 
     me->SetStatFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER, power_regen_mp5 + CalculatePct(value, modManaRegenInterrupt));
@@ -7671,8 +7673,8 @@ void bot_ai::ApplyBotDamageMultiplierHeal(Unit const* victim, float& heal, Spell
 
     heal = (heal * (BotMgr::IsWanderingWorldBot(me) ? BotMgr::GetBotWandererHealingMod() : BotMgr::GetBotHealingMod()));
 
-    if (BotMgr::IsHealingCheatActive() && (me->GetMap()->IsRaid() || me->GetMap()->IsNonRaidDungeon()))
-        heal *= 2;
+    if (BotMgr::IsHealingCheatActive() && me->GetLevel() > BotMgr::GetBotsCheatStartLevel() && (me->GetMap()->IsRaid() || me->GetMap()->IsNonRaidDungeon()))
+        heal *= 2 * BotMgr::GetBotsCheatFactor();
 }
 void bot_ai::ApplyBotCritMultiplierAll(Unit const* victim, float& crit_chance, SpellInfo const* spellInfo, SpellSchoolMask schoolMask, WeaponAttackType attackType) const
 {
