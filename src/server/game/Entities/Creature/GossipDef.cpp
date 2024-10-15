@@ -28,6 +28,7 @@
 #include "Config.h"
 //Todo: eww
 #include "../../../../modules/mod-Individual-Progression/src/IndividualProgression.h"
+#include "../../../../../modules/mod-weekend-xp/src/DoubleXPWeekend.h"
 
 GossipMenu::GossipMenu()
 {
@@ -854,8 +855,8 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const* quest, ObjectGuid npcGU
 uint32 PlayerMenu::CalculateCustomQuestXpExtras(Player* player, uint32 questXp) const
 {
     //Weekend extra xp
-    if (IsXpWeekendEventActive())
-        questXp *= GetXpWeekendExperienceRate(player);
+    if (sXPWeekend->IsXPWeekendEventActive())
+        questXp *= sXPWeekend->GetXPWeekendExperienceRate(player);
 
     // Boxhead Custom | Give more xp depending on individual progression
     // > Vanilla xp boost
@@ -871,26 +872,4 @@ uint32 PlayerMenu::CalculateCustomQuestXpExtras(Player* player, uint32 questXp) 
         questXp *= 3.0;
 
     return questXp;
-}
-
-float PlayerMenu::GetXpWeekendExperienceRate(Player* player) const
-{
-    float rate = sConfigMgr->GetOption<float>("XPWeekend.xpAmount", 1);
-
-    // Prevent returning 0% rate.
-    return rate ? rate : 1;
-}
-
-bool PlayerMenu::IsXpWeekendEventActive() const
-{
-    if (sConfigMgr->GetOption<bool>("XPWeekend.AlwaysEnabled", false))
-        return true;
-        
-    if (!sConfigMgr->GetOption<bool>("XPWeekend.Enabled", false))
-        return false;
-
-    time_t t = time(nullptr);
-    tm* now = localtime(&t);
-
-    return now->tm_wday == 5 || now->tm_wday == 6 || now->tm_wday == 0;
 }

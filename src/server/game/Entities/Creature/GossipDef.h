@@ -292,8 +292,5 @@ private:
     GossipMenu _gossipMenu;
     QuestMenu  _questMenu;
     WorldSession* _session;
-
-    float GetXpWeekendExperienceRate(Player* player) const;
-    bool IsXpWeekendEventActive() const;
 };
 #endif
