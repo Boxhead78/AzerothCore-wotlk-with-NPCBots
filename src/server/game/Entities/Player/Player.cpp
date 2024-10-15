@@ -94,9 +94,10 @@
 //npcbot
 #include "botmgr.h"
 #include "botdatamgr.h"
+//end npcbot
 #include "../../../../../modules/mod-weekend-xp/src/DoubleXPWeekend.h"
 #include "../../../../../modules/mod-individual-progression/src/IndividualProgression.h"
-//end npcbot
+#include "../../../../../modules/mod-event-xp/src/DoubleXPEvent.h"
 
 enum CharacterFlags
 {
@@ -16551,6 +16552,10 @@ void Player::SendSystemMessage(std::string_view msg, bool escapeCharacters)
 uint32 Player::CalculateModulesXpExtras(uint32 questXp) const
 {
     Player* player = const_cast<Player*>(this);
+
+    //Event extra xp
+    if (sXPEvent->IsXPEventActive())
+        questXp *= sXPEvent->GetXPEventExperienceRate(player);
 
     //Weekend extra xp
     if (sXPWeekend->IsXPWeekendEventActive())

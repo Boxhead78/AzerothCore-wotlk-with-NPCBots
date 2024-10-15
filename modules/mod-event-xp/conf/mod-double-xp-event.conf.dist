@@ -1,0 +1,35 @@
+[worldserver]
+
+# XPEvent.Announce
+# 	Annnounces to the player that the module is enabled even if its not the weekend.
+# default: 1 = true 
+#
+
+XPEvent.Announce = 0
+
+# XPEvent.Enabled
+#	Enable or Disable the module.
+#default: 1 = enable
+#
+
+XPEvent.Enabled = 0
+
+# XPEvent.xpAmount
+#	Allows the config file to set the amount of times xp is given
+# default = 2 (double)
+#
+XPEvent.xpAmount = 2
+
+# XPEvent.QuestOnly
+#     Restricts the experience bonus to quest rewards only.
+#     Default: 0 (Disabled, both creatures and quests are affected)
+#
+
+XPEvent.QuestOnly = 0
+
+# XPEvent.MaxLevel = 80
+#     Restricts the experience bonus to characters of a certain level.
+#     Characters with a higher level than this will not receive any bonus experience.
+#
+
+XPEvent.MaxLevel = 80
