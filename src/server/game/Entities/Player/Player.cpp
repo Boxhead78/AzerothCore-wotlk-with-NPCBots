@@ -94,6 +94,8 @@
 //npcbot
 #include "botmgr.h"
 #include "botdatamgr.h"
+#include "../../../../../modules/mod-weekend-xp/src/DoubleXPWeekend.h"
+#include "../../../../../modules/mod-individual-progression/src/IndividualProgression.h"
 //end npcbot
 
 enum CharacterFlags
@@ -16544,4 +16546,28 @@ std::string Player::GetDebugInfo() const
 void Player::SendSystemMessage(std::string_view msg, bool escapeCharacters)
 {
     ChatHandler(GetSession()).SendSysMessage(msg, escapeCharacters);
+}
+
+uint32 Player::CalculateModulesXpExtras(uint32 questXp) const
+{
+    Player* player = const_cast<Player*>(this);
+
+    //Weekend extra xp
+    if (sXPWeekend->IsXPWeekendEventActive())
+        questXp *= sXPWeekend->GetXPWeekendExperienceRate(player);
+
+    // Boxhead Custom | Give more xp depending on individual progression
+    // > Vanilla xp boost
+    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_NAXX40) && !sIndividualProgression->hasPassedProgression(player, PROGRESSION_TBC_TIER_5) && player->GetLevel() < 60)
+        questXp *= 1.5;
+
+    // > TBC xp boost
+    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_TBC_TIER_5) && !sIndividualProgression->hasPassedProgression(player, PROGRESSION_WOTLK_TIER_5) && player->GetLevel() < 70)
+        questXp *= 2.25;
+
+    // > WotLK xp boost
+    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_CUSTOM_TIER_1) && player->GetLevel() < 80)
+        questXp *= 3.0;
+
+    return questXp;
 }

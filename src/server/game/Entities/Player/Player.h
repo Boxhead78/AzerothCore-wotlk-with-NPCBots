@@ -2630,6 +2630,8 @@ public:
     /***                      END NPCBOT SYSTEM                    ***/
     /*****************************************************************/
 
+    uint32 CalculateModulesXpExtras(uint32 questXp) const;
+
  protected:
     // Gamemaster whisper whitelist
     WhisperListContainer WhisperList;

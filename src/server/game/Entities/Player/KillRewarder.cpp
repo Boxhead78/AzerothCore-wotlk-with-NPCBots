@@ -23,8 +23,6 @@
 #include "ScriptMgr.h"
 #include "SpellAuraEffects.h"
 #include "LFGGroupData.h"
-//Todo: eww
-#include "../../../../modules/mod-Individual-Progression/src/IndividualProgression.h"
 
 //npcbot
 #include "botmgr.h"
@@ -205,18 +203,7 @@ void KillRewarder::_RewardXP(Player* player, float rate)
                 xp *= 12.5;
         }
 
-        // Boxhead Custom | Give more xp depending on individual progression
-        // > Vanilla xp boost
-        if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_NAXX40) && !sIndividualProgression->hasPassedProgression(player, PROGRESSION_TBC_TIER_5) && player->GetLevel() < 60)
-            xp *= 1.5;
-
-        // > TBC xp boost
-        if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_TBC_TIER_5) && !sIndividualProgression->hasPassedProgression(player, PROGRESSION_WOTLK_TIER_5) && player->GetLevel() < 70)
-            xp *= 2.25;
-
-        // > WotLK xp boost
-        if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_CUSTOM_TIER_1) && player->GetLevel() < 80)
-            xp *= 3.0;
+        xp = player->CalculateModulesXpExtras(xp);
 
         // Don't give XP outside of dungeons if in LFG Group now
         if (Group* gr = player->GetGroup())

@@ -26,9 +26,6 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Config.h"
-//Todo: eww
-#include "../../../../modules/mod-Individual-Progression/src/IndividualProgression.h"
-#include "../../../../../modules/mod-weekend-xp/src/DoubleXPWeekend.h"
 
 GossipMenu::GossipMenu()
 {
@@ -476,7 +473,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
         }
 
         //Boxhead: Show correct xp
-        questXp = CalculateCustomQuestXpExtras(player, questXp);
+        questXp = player->CalculateModulesXpExtras(questXp);
 
         sScriptMgr->OnQuestComputeXP(player, quest, questXp);
         data << questXp;
@@ -732,7 +729,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* quest, ObjectGuid npcGUI
     }
 
     //Boxhead: Show correct xp
-    questXp = CalculateCustomQuestXpExtras(player, questXp);
+    questXp = player->CalculateModulesXpExtras(questXp);
 
     sScriptMgr->OnQuestComputeXP(player, quest, questXp);
     data << questXp;
@@ -850,26 +847,4 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const* quest, ObjectGuid npcGU
 
     _session->SendPacket(&data);
     LOG_DEBUG("network", "WORLD: Sent SMSG_QUESTGIVER_REQUEST_ITEMS {}, questid={}", npcGUID.ToString(), quest->GetQuestId());
-}
-
-uint32 PlayerMenu::CalculateCustomQuestXpExtras(Player* player, uint32 questXp) const
-{
-    //Weekend extra xp
-    if (sXPWeekend->IsXPWeekendEventActive())
-        questXp *= sXPWeekend->GetXPWeekendExperienceRate(player);
-
-    // Boxhead Custom | Give more xp depending on individual progression
-    // > Vanilla xp boost
-    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_NAXX40) && !sIndividualProgression->hasPassedProgression(player, PROGRESSION_TBC_TIER_5) && player->GetLevel() < 60)
-        questXp *= 1.5;
-
-    // > TBC xp boost
-    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_TBC_TIER_5) && !sIndividualProgression->hasPassedProgression(player, PROGRESSION_WOTLK_TIER_5) && player->GetLevel() < 70)
-        questXp *= 2.25;
-
-    // > WotLK xp boost
-    if (sIndividualProgression->enabled && sIndividualProgression->hasPassedProgression(player, PROGRESSION_CUSTOM_TIER_1) && player->GetLevel() < 80)
-        questXp *= 3.0;
-
-    return questXp;
 }
