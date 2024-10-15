@@ -224,7 +224,7 @@ IndividualProgression.SimpleConfigOverride = 0
 #
 #
 
-IndividualProgression.ProgressionLimit = 0
+IndividualProgression.ProgressionLimit = 16
 #
 #    IndividualProgression.StartingProgression
 #        Description: If enabled, players will begin at this progression stage.
