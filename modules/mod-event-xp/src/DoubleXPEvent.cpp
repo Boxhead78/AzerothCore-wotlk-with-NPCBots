@@ -1,8 +1,6 @@
-#include "Configuration/Config.h"
 #include "ScriptMgr.h"
 #include "Player.h"
 #include "Chat.h"
-#include "time.h"
 #include "DoubleXPEvent.h"
 
 DoubleXPEvent* DoubleXPEvent::instance()
