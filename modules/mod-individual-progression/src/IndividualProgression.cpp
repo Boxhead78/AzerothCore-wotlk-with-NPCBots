@@ -395,6 +395,7 @@ private:
         sIndividualProgression->pvpGearRequirements = sConfigMgr->GetOption<bool>("IndividualProgression.PvPGearRequirements", true);
         sIndividualProgression->excludeAccounts = sConfigMgr->GetOption<bool>("IndividualProgression.ExcludeAccounts", false);
         sIndividualProgression->excludedAccountsRegex = sConfigMgr->GetOption<std::string>("IndividualProgression.ExcludedAccountsRegex", "");
+        sIndividualProgression->progressionSetterAlwaysVisible = sConfigMgr->GetOption<bool>("IndividualProgression.ProgressionSetterAlwaysVisible", false);
     }
 
     static void LoadXpValues()

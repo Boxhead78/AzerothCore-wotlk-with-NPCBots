@@ -388,3 +388,13 @@ IndividualProgression.ExcludeAccounts = 0
 #        Default:     ""
 #
 IndividualProgression.ExcludedAccountsRegex = ""
+
+#
+#    IndividualProgression.ProgressionSetterAlwaysVisible
+#        Description: Normally the individual progression setter (ID 50000) is only visible if one character of an account has 
+#        either reached max progression or the IndividualProgression.ProgressionLimit. With ProgressionSetterAlwaysVisible enabled
+#        the player can always see the progression setter npc.
+#        Default:     0 - Disabled
+#                     1 - Enabled
+#
+IndividualProgression.ProgressionSetterAlwaysVisible = 0

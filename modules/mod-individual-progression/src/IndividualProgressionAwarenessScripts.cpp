@@ -353,7 +353,7 @@ public:
 
         bool CanBeSeen(Player const* player) override
         {
-            if (player->IsGameMaster() || !sIndividualProgression->enabled)
+            if (player->IsGameMaster() || !sIndividualProgression->enabled || sIndividualProgression->progressionSetterAlwaysVisible)
             {
                 return true;
             }
