@@ -1043,7 +1043,7 @@ bool bot_ai::doCast(Unit* victim, uint32 spellId, TriggerCastFlags flags)
 void bot_ai::_calculatePos(Unit const* followUnit, Position& pos, float* speed/* = nullptr*/) const
 {
     Player const* player = followUnit->ToPlayer();
-    uint8 followdist = !player ? BotMgr::GetBotFollowDistDefault() / 2 : player->GetBotMgr()->GetBotFollowDist();
+    uint8 followdist = !player ? BotMgr::GetBotFollowDistMax() / 2 : player->GetBotMgr()->GetBotFollowDist();
     float mydist, angle;
 
     if (HasRole(BOT_ROLE_TANK))
@@ -2420,7 +2420,7 @@ void bot_ai::SetStats(bool force)
         case DRUID_TREE_FORM:
         case DRUID_TRAVEL_FORM:
         case DRUID_AQUATIC_FORM:
-        //case DRUID_FLIGHT_FORM:
+        case DRUID_FLIGHT_FORM:
         case BOT_CLASS_BM:
         case BOT_CLASS_SPHYNX:
         case BOT_CLASS_ARCHMAGE:
@@ -2491,7 +2491,7 @@ void bot_ai::SetStats(bool force)
         case DRUID_TREE_FORM:
         case DRUID_TRAVEL_FORM:
         case DRUID_AQUATIC_FORM:
-        //case DRUID_FLIGHT_FORM:
+        case DRUID_FLIGHT_FORM:
             strmult = 2.f; agimult = 0.f; break;
         case BOT_CLASS_BM:
             strmult = 0.f; agimult = 9.f; break;
@@ -3739,7 +3739,7 @@ bool bot_ai::CanBotAttack(Unit const* target, int8 byspell, bool secondary) cons
     }
 
     bool pulling = IsLastOrder(BOT_ORDER_PULL, 0, target->GetGUID());
-    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistDefault() : master->GetBotMgr()->GetBotFollowDist();
+    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistMax() : master->GetBotMgr()->GetBotFollowDist();
     float foldist = _getAttackDistance(float(followdist));
     if (!IAmFree() && IsRanged() && me->IsWithinLOSInMap(target, VMAP::ModelIgnoreFlags::M2, LINEOFSIGHT_ALL_CHECKS))
         _extendAttackRange(foldist);
@@ -4354,7 +4354,7 @@ std::tuple<Unit*, Unit*> bot_ai::_getTargets(bool byspell, bool ranged, bool &re
         return { u, u };//forced
     }
     //Follow if...
-    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistDefault() / 2 : master->GetBotMgr()->GetBotFollowDist();
+    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistMax() / 2 : master->GetBotMgr()->GetBotFollowDist();
     if (IsWanderer() && me->GetMap()->GetEntry()->IsBattlegroundOrArena())
         followdist += 30;
     float foldist = _getAttackDistance(float(followdist));
@@ -4602,7 +4602,7 @@ bool bot_ai::CheckAttackTarget()
                 case DRUID_TREE_FORM:
                 case DRUID_TRAVEL_FORM:
                 case DRUID_AQUATIC_FORM:
-                //case DRUID_FLIGHT_FORM:
+                case DRUID_FLIGHT_FORM:
                     ranged = true;
                     break;
                 case DRUID_MOONKIN_FORM:
@@ -5094,6 +5094,24 @@ void bot_ai::CalculateAoeSpots(Unit const* unit, AoeSpotsVec& spots)
             spots.push_back(AoeSpotsVec::value_type(*creature, radius));
         }
     }
+    //Magister's Terrace
+    else if (unit->GetMapId() == 585)
+    {
+        std::list<Creature*> cList;
+        static const auto kael_aoe_check = [](Creature const* c) {
+            return (c->GetEntry() == CREATURE_MT_PHOENIX || c->GetEntry() == CREATURE_MT_ARCANE_SPHERE_N || c->GetEntry() == CREATURE_MT_ARCANE_SPHERE_H);
+        };
+        Acore::CreatureListSearcher searcher3(unit, cList, kael_aoe_check);
+        Cell::VisitAllObjects(unit, searcher3, 40.f);
+
+        if (!cList.empty())
+        {
+            spellInfo = sSpellMgr->GetSpellInfo(44198); //Burn damage (44197 -> 44198)
+            float radius = spellInfo->Effects[0].CalcRadius() + DEFAULT_COMBAT_REACH * 3.0f;
+            for (Creature* c : cList)
+                spots.emplace_back(*c, radius);
+        }
+    }
     //The Eye of Eternity
     else if (unit->GetMapId() == 616 && unit->GetVehicle())
     {
@@ -5307,7 +5325,7 @@ bool bot_ai::_canSwitchToTarget(Unit const* from, Unit const* newTarget, int8 by
 //Ranged attack position
 void bot_ai::CalculateAttackPos(Unit* target, Position& pos, bool& force) const
 {
-    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistDefault() : master->GetBotMgr()->GetBotFollowDist();
+    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistMax() : master->GetBotMgr()->GetBotFollowDist();
     uint8 rangeMode = IAmFree() ? uint8(BOT_ATTACK_RANGE_LONG) : master->GetBotMgr()->GetBotAttackRangeMode();
     uint8 exactRange = rangeMode != BOT_ATTACK_RANGE_EXACT || IAmFree() ? 255 : master->GetBotMgr()->GetBotExactAttackRange();
     uint8 angleMode = IAmFree() ? uint8(BOT_ATTACK_ANGLE_NORMAL) : master->GetBotMgr()->GetBotAttackAngleMode();
@@ -5565,7 +5583,7 @@ void bot_ai::GetInPosition(bool force, Unit* newtarget, Position* mypos)
         return;
     }
 
-    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistDefault() : master->GetBotMgr()->GetBotFollowDist();
+    uint8 followdist = IAmFree() ? BotMgr::GetBotFollowDistMax() : master->GetBotMgr()->GetBotFollowDist();
     if (IsRanged() || (!IAmFree() && !GetAoeSpots().empty()))
     {
         //do not allow constant runaway from player
@@ -5870,19 +5888,24 @@ uint32 bot_ai::_selectMountSpell() const
         }
         else //if (can_fly)
         {
-            static const MountArray MOUNTS_150_ALLIANCE = { BOT_MOUNT_FLY_ALLIANCE_150_1, BOT_MOUNT_FLY_ALLIANCE_150_2, BOT_MOUNT_FLY_ALLIANCE_150_3 };
-            static const MountArray MOUNTS_150_HORDE = { BOT_MOUNT_FLY_HORDE_150_1, BOT_MOUNT_FLY_HORDE_150_2, BOT_MOUNT_FLY_HORDE_150_3 };
-            static const MountArray MOUNTS_280_ALLIANCE = { BOT_MOUNT_FLY_ALLIANCE_280_1, BOT_MOUNT_FLY_ALLIANCE_280_2, BOT_MOUNT_FLY_ALLIANCE_280_3 };
-            static const MountArray MOUNTS_280_HORDE = { BOT_MOUNT_FLY_HORDE_280_1, BOT_MOUNT_FLY_HORDE_280_2, BOT_MOUNT_FLY_HORDE_280_3 };
+            if (GetBotClass() == BOT_CLASS_DRUID && GetSpell(33943))
+                myMountSpellId = useSlowMount ? 33943 : GetSpell(33943);
+            else
+            {
+                static const MountArray MOUNTS_150_ALLIANCE = { BOT_MOUNT_FLY_ALLIANCE_150_1, BOT_MOUNT_FLY_ALLIANCE_150_2, BOT_MOUNT_FLY_ALLIANCE_150_3 };
+                static const MountArray MOUNTS_150_HORDE = { BOT_MOUNT_FLY_HORDE_150_1, BOT_MOUNT_FLY_HORDE_150_2, BOT_MOUNT_FLY_HORDE_150_3 };
+                static const MountArray MOUNTS_280_ALLIANCE = { BOT_MOUNT_FLY_ALLIANCE_280_1, BOT_MOUNT_FLY_ALLIANCE_280_2, BOT_MOUNT_FLY_ALLIANCE_280_3 };
+                static const MountArray MOUNTS_280_HORDE = { BOT_MOUNT_FLY_HORDE_280_1, BOT_MOUNT_FLY_HORDE_280_2, BOT_MOUNT_FLY_HORDE_280_3 };
 
-            Optional<MountArray> myMounts;
-            if (me->GetRaceMask() & RACEMASK_ALLIANCE)
-                myMounts = useSlowMount ? MOUNTS_150_ALLIANCE : MOUNTS_280_ALLIANCE;
-            else if (me->GetRaceMask() & RACEMASK_HORDE)
-                myMounts = useSlowMount ? MOUNTS_150_HORDE : MOUNTS_280_HORDE;
+                Optional<MountArray> myMounts;
+                if (me->GetRaceMask() & RACEMASK_ALLIANCE)
+                    myMounts = useSlowMount ? MOUNTS_150_ALLIANCE : MOUNTS_280_ALLIANCE;
+                else if (me->GetRaceMask() & RACEMASK_HORDE)
+                    myMounts = useSlowMount ? MOUNTS_150_HORDE : MOUNTS_280_HORDE;
 
-            if (myMounts)
-                myMountSpellId = (*myMounts)[me->GetEntry() % myMounts->size()];
+                if (myMounts)
+                    myMountSpellId = (*myMounts)[me->GetEntry() % myMounts->size()];
+            }
         }
     }
 
@@ -5901,22 +5924,26 @@ void bot_ai::_updateMountedState()
     bool aura = me->HasAuraType(SPELL_AURA_MOUNTED);
     bool mounted = me->IsMounted() && (_botclass != BOT_CLASS_ARCHMAGE || aura);
     bool template_fly = me->GetCreatureTemplate()->Movement.Flight != CreatureFlightMovementType::None;
+    bool druid_fly = GetBotStance() == DRUID_FLIGHT_FORM;
     Unit const* victim = me->GetVictim();
 
     //allow dismount
-    if (!CanMount() && !aura && !mounted)
+    if (!CanMount() && !aura && !mounted && !druid_fly)
         return;
 
-    if ((aura || mounted || template_fly) &&
-        (!master->IsMounted() || aura != mounted || (!mounted && template_fly) ||
+    if ((aura || mounted || template_fly || druid_fly) &&
+        (!master->IsMounted() || aura != mounted || (!mounted && !druid_fly && template_fly) ||
             (me->IsInCombat() && (opponent || disttarget)) ||
             (IAmFree() && victim && me->IsWithinDist(victim, IsMelee() ? 5.0f : GetSpellAttackRange(true), false))))
     {
-        DismountBot();
+        if (druid_fly)
+            removeShapeshiftForm();
+        else
+            DismountBot();
         return;
     }
 
-    if (me->IsMounted() || me->GetVehicle() || me->HasUnitMovementFlag(MOVEMENTFLAG_SWIMMING) || !IsOutdoors() ||
+    if (druid_fly || me->IsMounted() || me->GetVehicle() || me->HasUnitMovementFlag(MOVEMENTFLAG_SWIMMING) || !IsOutdoors() ||
         master->IsInCombat() || me->IsInCombat() || me->GetVictim() || IsCasting() || IsFlagCarrier(me) ||
         (HasBotCommandState(BOT_COMMAND_STAY) && GetBG() && GetBG()->GetStatus() != STATUS_IN_PROGRESS))
         return;
@@ -7456,7 +7483,7 @@ void bot_ai::OnSpellHit(Unit* caster, SpellInfo const* spell)
     {
         uint32 const auraname = spell->Effects[i].ApplyAuraName;
         //remove pet on mount
-        if (auraname == SPELL_AURA_MOUNTED)
+        if (auraname == SPELL_AURA_MOUNTED || (!spell->HasAura(SPELL_AURA_MOUNTED) && auraname == SPELL_AURA_MOD_INCREASE_FLIGHT_SPEED))
         {
             //TC_LOG_ERROR("entities.unit", "OnSpellHit: mount on %s", me->GetName().c_str());
             if (master->HasAuraType(SPELL_AURA_MOD_INCREASE_FLIGHT_SPEED) ||
@@ -7474,7 +7501,8 @@ void bot_ai::OnSpellHit(Unit* caster, SpellInfo const* spell)
                     {
                         if (spell->Effects[j].ApplyAuraName != SPELL_AURA_MOD_INCREASE_FLIGHT_SPEED &&
                             spell->Effects[j].ApplyAuraName != SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED &&
-                            spell->Effects[j].ApplyAuraName != SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
+                            spell->Effects[j].ApplyAuraName != SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED &&
+                            !(GetBotStance() == DRUID_FLIGHT_FORM && spell->Effects[j].ApplyAuraName == SPELL_AURA_MOD_INCREASE_SPEED))
                             continue;
                         if (AuraEffect* meff = mount->GetEffect(j))
                         {
@@ -13459,7 +13487,7 @@ float bot_ai::_getTotalBotStat(BotStatMods stat) const
 
     uint8 lvl = me->GetLevel();
     Stats fstat = STAT_STRENGTH;
-    UnitMods fmod = UNIT_MOD_STAT_STRENGTH;
+    UnitMods fmod = UNIT_MOD_END;
     float fpct = 0.0f;
     float fval = float(value);
 
@@ -13690,9 +13718,12 @@ float bot_ai::_getTotalBotStat(BotStatMods stat) const
             break;
     }
 
-    fpct += me->GetModifierValue(fmod, TOTAL_PCT);
-    fval *= fpct;
-    fval += me->GetTotalStatValue(fstat);
+    if (fmod != UNIT_MOD_END)
+    {
+        fpct += me->GetModifierValue(fmod, TOTAL_PCT);
+        fval *= fpct;
+        fval += me->GetTotalStatValue(fstat);
+    }
     return fval;
 }
 
@@ -18074,7 +18105,7 @@ bool bot_ai::GlobalUpdate(uint32 diff)
             {
                 float speed = 0.0f;
                 _calculatePos(mmover, movepos, &speed);
-                float maxdist = std::max<float>((mmover->IsPlayer() ? mmover->ToPlayer()->GetBotMgr()->GetBotFollowDist() : BotMgr::GetBotFollowDistDefault() / 2) *
+                float maxdist = std::max<float>((mmover->IsPlayer() ? mmover->ToPlayer()->GetBotMgr()->GetBotFollowDist() : BotMgr::GetBotFollowDistMax() / 2) *
                     ((mmover->m_movementInfo.GetMovementFlags() & MOVEMENTFLAG_FORWARD) ? 0.125f : mmover->isMoving() ? 0.03125f : 0.25f), 3.f);
                 Position destPos;
                 if (me->isMoving())
