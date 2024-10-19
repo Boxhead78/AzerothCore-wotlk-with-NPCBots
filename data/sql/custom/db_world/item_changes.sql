@@ -3506,7 +3506,7 @@ UPDATE `item_template` SET `BuyPrice` = 2361 WHERE entry=5459;
 UPDATE `item_template` SET `spellid_1` = 5405, `spellcharges_1` = -1, `spellcooldown_1` = -1, `spellcategorycooldown_1` = 120000, `spellcategory_1` = 1153, `spellid_2` = 0, `spellcharges_2` = 0, `spellcategorycooldown_2` = 0, `spellcategory_2` = 0, `spellcooldown_3` = -1, `spellcategorycooldown_3` = -1, `spellcooldown_4` = -1, `spellcategorycooldown_4` = -1, `RequiredLevel` = 23 WHERE entry=5514;
 
 /*  Iridescent Hammer  */
-UPDATE `item_template` SET `BuyPrice` = 18469, `SellPrice` = 3693, `dmg_min1` = 18.0, `dmg_max1` = 34.0, `stat_type1` = 4, `stat_type2` = 7, `stat_value2` = 3 WHERE entry=5541;
+UPDATE `item_template` SET `BuyPrice` = 18469, `SellPrice` = 3693, `dmg_min1` = 18.0, `dmg_max1` = 34.0, `stat_type1` = 4, `stat_type2` = 7, `stat_value2` = 3, `delay` = 1800 WHERE entry=5541;
 
 /*  Pearl-clasped Cloak  */
 UPDATE `item_template` SET `BuyPrice` = 1852 WHERE entry=5542;
@@ -15101,10 +15101,16 @@ UPDATE `item_template` SET `BuyPrice` = 250218, `SellPrice` = 50043 WHERE entry=
 UPDATE `item_template` SET `BuyPrice` = 251079, `SellPrice` = 50215 WHERE entry=18848;
 
 /*  Insignia of the Horde  */
+UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 42292, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18849;
+
+/*  Insignia of the Horde  */
 UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 23274, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18850;
 
 /*  Insignia of the Horde  */
 UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 23276, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18851;
+
+/*  Insignia of the Horde  */
+UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 42292, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18852;
 
 /*  Insignia of the Horde  */
 UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 23277, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18853;
@@ -15117,6 +15123,12 @@ UPDATE `item_template` SET `BuyPrice` = 179726, `SellPrice` = 35945, `dmg_min1` 
 
 /*  Insignia of the Alliance  */
 UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 5579, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18856;
+
+/*  Insignia of the Alliance  */
+UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 42292, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18857;
+
+/*  Insignia of the Alliance  */
+UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 42292, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18858;
 
 /*  Insignia of the Alliance  */
 UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 23274, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=18859;
@@ -19768,6 +19780,11 @@ UPDATE `item_template` SET `BuyPrice` = 393470, `SellPrice` = 78694, `dmg_min1` 
 /*  QATest +1000 Spell Dmg Ring  */
 UPDATE `item_template` SET `spellid_1` = 31750, `spelltrigger_1` = 1 WHERE entry=24358;
 
+/*  Insignia of the Horde  */
+UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 42292, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=29592;
+
+/*  Insignia of the Alliance  */
+UPDATE `item_template` SET `BuyPrice` = 15000, `SellPrice` = 3750, `ItemLevel` = 0, `spellid_1` = 42292, `spellcategorycooldown_1` = -1, `spellcategory_1` = 0 WHERE entry=29593;
 
 /* =========== NON-EQUIPMENT ITEMS ================ */
 
