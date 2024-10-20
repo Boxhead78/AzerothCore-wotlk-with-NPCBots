@@ -203,8 +203,6 @@ void KillRewarder::_RewardXP(Player* player, float rate)
                 xp *= 12.5;
         }
 
-        xp = player->CalculateModulesXpExtras(xp);
-
         // Don't give XP outside of dungeons if in LFG Group now
         if (Group* gr = player->GetGroup())
         {
