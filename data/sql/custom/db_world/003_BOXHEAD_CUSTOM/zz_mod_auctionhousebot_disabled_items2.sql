@@ -35,7 +35,6 @@ WHERE (
     NAME LIKE '%big sack%' OR 
     NAME LIKE '%decoded%' OR 
     NAME LIKE '%knowledge:%' OR 
-    NAME LIKE '%manual%' OR 
     NAME LIKE '%gnome head%' OR 
     NAME LIKE '%critter enlarger%' OR 
     NAME LIKE '%box of%' OR 
@@ -101,7 +100,6 @@ WHERE (
     NAME LIKE '%big sack%' OR 
     NAME LIKE '%decoded%' OR 
     NAME LIKE '%knowledge:%' OR 
-    NAME LIKE '%manual%' OR 
     NAME LIKE '%gnome head%' OR 
     NAME LIKE '%critter enlarger%' OR 
     NAME LIKE '%box of%' OR 
