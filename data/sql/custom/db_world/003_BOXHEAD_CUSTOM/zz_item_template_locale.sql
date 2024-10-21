@@ -1,0 +1,2 @@
+DELETE FROM `item_template_locale` WHERE `ID`=90000 AND `locale`='deDE';
+INSERT INTO `item_template_locale` (`ID`, `locale`, `Name`, `Description`, `VerifiedBuild`) VALUES (90000, 'deDE', 'Foliant des Fliegens', 'Lehrt Euch das Fliegen, wodurch Ihr in der Scherbenwelt fliegen könnt. Der Foliant wird nach dem Lesen verbraucht.', 15050);

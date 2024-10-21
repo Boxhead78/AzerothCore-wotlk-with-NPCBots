@@ -1,3 +1,5 @@
+DELETE FROM `dungeon_access_template` WHERE `id`=126;
+INSERT INTO `dungeon_access_template` (`id`, `map_id`, `difficulty`, `min_level`, `max_level`, `min_avg_item_level`, `comment`) VALUES (126, 389, 1, 80, 83, 999, 'Ragefire Chasm (Heroic)');
 DELETE FROM `dungeon_access_template` WHERE `id`=125;
 INSERT INTO `dungeon_access_template` (`id`, `map_id`, `difficulty`, `min_level`, `max_level`, `min_avg_item_level`, `comment`) VALUES (125, 0, 1, 80, 83, 180, 'Random Dungeon (Heroic WotLK)');
 DELETE FROM `dungeon_access_template` WHERE `id`=124;

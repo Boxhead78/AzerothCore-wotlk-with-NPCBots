@@ -1,0 +1,2 @@
+DELETE FROM `npc_vendor` WHERE `entry`=31238 AND `item`=90000 AND `ExtendedCost`=0;
+INSERT INTO `npc_vendor` (`entry`, `slot`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `VerifiedBuild`) VALUES (31238, 1, 90000, 0, 0, 0, 0);
