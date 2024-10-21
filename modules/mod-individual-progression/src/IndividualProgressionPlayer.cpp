@@ -152,14 +152,6 @@ public:
             return;
         }
 
-        // Boxhead Custom | Give more xp depending on individual progression
-        // > Vanilla xp boost
-        // CalculateModulesXpExtras
-        if (xpSource == XPSOURCE_QUEST || xpSource == XPSOURCE_QUEST_DF)
-        {
-            amount = player->CalculateModulesXpExtras(amount);
-        }
-
         // Player is still in Vanilla content - do not give XP past level 60
         if (!sIndividualProgression->hasPassedProgression(player, PROGRESSION_NAXX40) && player->GetLevel() >= 60)
         {
