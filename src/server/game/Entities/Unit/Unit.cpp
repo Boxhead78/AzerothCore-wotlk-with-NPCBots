@@ -1108,6 +1108,23 @@ uint32 Unit::DealDamage(Unit* attacker, Unit* victim, uint32 damage, CleanDamage
 
     if (victim->IsPlayer())
         ;//victim->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_HIT_RECEIVED, damage); // pussywizard: optimization
+    //npcbot
+    else if (victim->IsNPCBotOrPet())
+    {
+        if (attacker && !victim->ToCreature()->hasLootRecipient())
+            victim->ToCreature()->SetLootRecipient(attacker);
+        if (victim->ToCreature()->GetPlayerDamageReq())
+        {
+            if (!attacker || attacker->IsControlledByPlayer() || (attacker->ToTempSummon() && attacker->ToTempSummon()->GetSummonerUnit() && attacker->ToTempSummon()->GetSummonerUnit()->IsPlayer()) ||
+                (attacker->IsNPCBotOrPet() && !attacker->ToCreature()->IsFreeBot()) || (attacker->GetCreator() && attacker->GetCreator()->IsPlayer()))
+            {
+                uint32 unDamage = health < damage ? health : damage;
+                bool damagedByPlayer = unDamage && attacker && (attacker->IsPlayer() || attacker->IsNPCBotOrPet() || attacker->m_movedByPlayer != nullptr);
+                victim->ToCreature()->LowerPlayerDamageReq(unDamage, damagedByPlayer);
+            }
+        }
+    }
+    //end npcbot
     else if (!victim->IsControlledByPlayer() || victim->IsVehicle())
     {
         if (!victim->ToCreature()->hasLootRecipient())
@@ -3551,6 +3568,13 @@ SpellMissInfo Unit::MeleeSpellHitResult(Unit* victim, SpellInfo const* spellInfo
         // Reduce dodge chance by attacker expertise rating
         if (IsPlayer())
             dodgeChance -= int32(ToPlayer()->GetExpertiseDodgeOrParryReduction(attType) * 100.0f);
+        //npcbot - manual expertise instead of auras
+        else if (IsNPCBot())
+        {
+            dodgeChance -= ToCreature()->GetCreatureExpertise() * 25;
+            dodgeChance -= GetTotalAuraModifier(SPELL_AURA_MOD_EXPERTISE) * 25;
+        }
+        //end npcbot
         else
             dodgeChance -= GetTotalAuraModifier(SPELL_AURA_MOD_EXPERTISE) * 25;
 
@@ -3570,6 +3594,13 @@ SpellMissInfo Unit::MeleeSpellHitResult(Unit* victim, SpellInfo const* spellInfo
         // Reduce parry chance by attacker expertise rating
         if (IsPlayer())
             parryChance -= int32(ToPlayer()->GetExpertiseDodgeOrParryReduction(attType) * 100.0f);
+        //npcbot - manual expertise instead of auras
+        else if (IsNPCBot())
+        {
+            parryChance -= ToCreature()->GetCreatureExpertise() * 25;
+            parryChance -= GetTotalAuraModifier(SPELL_AURA_MOD_EXPERTISE) * 25;
+        }
+        //end npcbot
         else
             parryChance -= GetTotalAuraModifier(SPELL_AURA_MOD_EXPERTISE) * 25;
 

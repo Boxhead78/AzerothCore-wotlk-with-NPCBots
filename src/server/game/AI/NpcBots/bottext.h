@@ -421,8 +421,10 @@ enum BotTexts : uint32
     BOT_TEXT_DALARAN                        = 70684, //"Dalaran"
     //70685-70799 reserved for custom localization strings
     BOT_TEXT_HIREFAIL_MAXBOTS_ACCOUNT       = 70685, //"You exceed max npcbots for your account ({} >= {})"
-    BOT_TEXT_BOTGIVER_HIRE_RAID             = 70701,
     //70686-70799 reserved for custom localization strings
+    BOT_TEXT_SET_FOR_ALL_EVERYONE           = 70686, //"<Set for all bots>"
+    //70687-70799 reserved for custom localization strings
+    BOT_TEXT_BOTGIVER_HIRE_RAID             = 70701,
 };
 
 #endif //BOTTEXT_H
